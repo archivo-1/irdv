@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Inteligencias Reflexivas & Digital Vértigo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            background-color: #111;
+            color: #fff;
+            font-family: sans-serif;
+            touch-action: pan-y;
+        }
+
+        /* --- BOTÓN DE IDIOMA --- */
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1100;
+            background: transparent;
+            color: #888; /* Letras grises */
+            border: none; /* Sin borde */
+            padding: 6px 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease, opacity 0.3s ease;
+            opacity: 0.7;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .lang-toggle:hover {
+            color: #fff;
+            opacity: 1;
+        }
+
+        /* Contenedor maestro */
+        .site-container {
+            display: flex;
+            width: 200%;
+            height: 100vh;
+            height: 100dvh;
+            transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+            will-change: transform;
+        }
+
+        .page-pane {
+            width: 50%;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+            padding: 4.5rem 5rem 6rem 4rem;
+            scroll-behavior: smooth;
+            display: block;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .page-pane::-webkit-scrollbar {
+            width: 8px;
+        }
+        .page-pane::-webkit-scrollbar-track {
+            background: #111;
+        }
+        .page-pane::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        .page-pane::-webkit-scrollbar-thumb:hover {
+            background: #00FF66;
+        }
+
+        #ir-site, #dv-site {
+            background-color: #121212;
+        }
+
+        .title-logo-img {
+            max-width: 100%;
+            width: 480px;
+            height: auto;
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p {
+            max-width: 700px;
+            line-height: 1.6;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        details {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            margin-bottom: 1rem;
+            border-radius: 0;
+            transition: border-color 0.3s ease;
+        }
+
+        details:hover {
+            border-bottom-color: #00FF66;
+        }
+
+        summary {
+            padding: 1.2rem 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 1px;
+            color: #fff;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: color 0.3s ease;
+        }
+
+        summary:hover {
+            color: #00FF66;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '▾';
+            font-size: 1.4rem;
+            color: #00FF66;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            padding: 1.5rem 0 2.5rem 0;
+            color: #ccc;
+            line-height: 1.6;
+            animation: fadeInSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .grid-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            min-height: 200px;
+            background: #181818;
+            border: 1px dashed #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 0.9rem;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: 480px;
+            border: none;
+            background: #000;
+            margin-top: 1rem;
+            border-radius: 4px;
+        }
+
+        .site-footer {
+            margin-top: 6rem;
+            padding-top: 3rem;
+            padding-bottom: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: block;
+        }
+
+        .footer-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .footer-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666;
+            min-width: 130px;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .logo-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .logo-img {
+            height: 28px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .institutions-row .logo-img {
+            height: 36px;
+        }
+
+        .global-flap {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 60px;
+            height: 100vh;
+            height: 100dvh;
+            background-color: #00FF66;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.6);
+            transition: background-color 0.3s ease, width 0.3s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .global-flap span {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            font-weight: bold;
+            color: #111;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .global-flap:hover {
+            width: 70px;
+            background-color: #00CC55;
+        }
+
+        @media (max-width: 768px) {
+            .lang-toggle {
+                top: 12px;
+                left: 12px;
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+
+            .page-pane {
+                padding: 4rem 54px 4rem 1.2rem !important;
+            }
+
+            .global-flap {
+                width: 42px !important;
+                background-color: #00FF66;
+            }
+
+            .global-flap:hover {
+                width: 42px !important;
+            }
+
+            .global-flap span {
+                font-size: 0.75rem;
+                letter-spacing: 1px;
+            }
+
+            .title-logo-img {
+                width: 100%;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 2rem;
+            }
+
+            .grid-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .image-placeholder {
+                min-height: 180px;
+            }
+
+            .iframe-container {
+                height: 320px;
+            }
+
+            .site-footer {
+                margin-top: 4rem;
+            }
+
+            .footer-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+
+            .footer-label {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BOTÓN CAMBIO DE IDIOMA -->
+    <button class="lang-toggle" id="langBtn" onclick="toggleLanguage()">EN</button>
+
+    <!-- SOLAPA FIJA LATERAL -->
+    <div class="global-flap" id="globalFlap" onclick="toggleSites()">
+        <span id="flapText">DIGITAL VÉRTIGO &gt;</span>
+    </div>
+
+    <!-- Contenedor maestro -->
+    <div class="site-container" id="siteContainer">
+        
+        <!-- PÁGINA 1: INTELIGENCIAS REFLEXIVAS -->
+        <div class="page-pane" id="ir-site">
+            <img src="thumbnails/inteligencias-reflexivas.png" alt="INTELIGENCIAS REFLEXIVAS" class="title-logo-img">
+            <div class="subtitle" id="ir-subtitle">Pabellón de Chile · 19° Bienal de Arquitectura de Venecia 2025</div>
+
+            <!-- 1. ABOUT -->
+            <details>
+                <summary id="ir-sum-about">ABOUT</summary>
+                <div class="dropdown-content">
+                    <div class="grid-content">
+                        <div class="text-block">
+                            <!-- ES -->
+                            <div class="lang-block" data-lang="es">
+                                <p>Inteligencias Reflexivas es la propuesta curatorial que representa al Pabellón de Chile en la 19° Bienal de Arquitectura de Venecia 2025. En respuesta al llamado internacional “Intelligens. Natural. Artificial. Collective.”, el proyecto propone un desplazamiento crítico: interrogar el imaginario tecno-optimista y abstracto de la Inteligencia Artificial para situar la mirada en sus condiciones materiales, sus impactos ecológicos y sus urgentes implicancias políticas.</p>
+                            </div>
+                            <!-- EN -->
+                            <div class="lang-block" data-lang="en" style="display: none;">
+                                <p>Reflective Intelligences is the curatorial proposal representing the Chilean Pavilion at the 19th International Architecture Exhibition – La Biennale di Venezia 2025. Responding to the theme "Intelligens. Natural. Artificial. Collective.", the project proposes a critical shift: questioning the techno-optimistic and abstract imaginary of Artificial Intelligence to focus on its material conditions, ecological impacts, and urgent political implications.</p>
+                            </div>
+                        </div>
+                        <div class="image-placeholder">[ Foto / Gráfica About ]</div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 2. CONTEXTO -->
+            <details>
+                <summary id="ir-sum-context">CONTEXTO DEL PABELLÓN DE CHILE</summary>
+                <div class="dropdown-content">
+                    <div class="grid-content">
+                        <div class="text-block">
+                            <!-- ES -->
+                            <div class="lang-block" data-lang="es">
+                                <p>En la última década, Chile ha dejado de ser únicamente un exportador de materias primas tradicionales para convertirse en un actor estratégico dentro de la infraestructura digital global. El despliegue de cables submarinos y la proyección de un Plan Nacional de Data Centers, con más de 25 complejos planificados o en funcionamiento, posicionan al país como hub tecnológico continental.</p>
+                                <p>Sin embargo, bajo las narrativas corporativas de la conectividad y el progreso invisible de “la nube”, subyacen transformaciones territoriales de gran magnitud que ejercen presiones críticas sobre comunidades locales y ecosistemas frágiles, tensionando el uso de recursos vitales como el agua y la energía.</p>
+                            </div>
+                            <!-- EN -->
+                            <div class="lang-block" data-lang="en" style="display: none;">
+                                <p>Over the last decade, Chile has shifted from being solely an exporter of traditional raw materials to becoming a strategic actor in global digital infrastructure. The deployment of submarine cables and the projection of a National Data Center Plan, with over 25 planned or operating complexes, position the country as a continental technology hub.</p>
+                                <p>However, beneath corporate narratives of connectivity and the invisible progress of "the cloud," lie large-scale territorial transformations that exert critical pressure on local communities and fragile ecosystems, straining vital resources like water and energy.</p>
+                            </div>
+                        </div>
+                        <div class="image-placeholder">[ Foto / Mapa Contexto ]</div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 3. PROBLEMÁTICA DATA CENTERS -->
+            <details>
+                <summary id="ir-sum-problem">PROBLEMÁTICA DE LOS DATA CENTERS</summary>
+                <div class="dropdown-content">
+                    <div class="grid-content">
+                        <div class="text-block">
+                            <!-- ES -->
+                            <div class="lang-block" data-lang="es">
+                                <p>El corazón conceptual y espacial del pabellón toma como punto de partida la mesa de negociación. El proyecto analiza críticamente más de 80 mesas e instancias institucionales donde se planifica el futuro tecnológico del país. ¿Cómo contribuyen estos espacios burocráticos a invisibilizar las inteligencias colectivas, corporales y espaciales que realmente sostienen a la tecnología?</p>
+                                <p>A través de una instalación que subvierte el objeto de la mesa y lo transforma en un artefacto de especulación arquitectónica, el pabellón opera como un espejo de estas controversias territoriales. Cartografías críticas, nube de puntos, sistemas de circulación hídrica y paisajes sonoros se entrelazan para devolverle la corporalidad y la fricción material al dato digital.</p>
+                            </div>
+                            <!-- EN -->
+                            <div class="lang-block" data-lang="en" style="display: none;">
+                                <p>The conceptual and spatial core of the pavilion uses the negotiation table as its starting point. The project critically analyzes over 80 institutional roundtables where the nation's technological future is planned. How do these bureaucratic spaces contribute to rendering invisible the collective, bodily, and spatial intelligences that truly sustain technology?</p>
+                                <p>Through an installation that subverts the negotiation table into an artifact of architectural speculation, the pavilion acts as a mirror to these territorial controversies. Critical cartography, point clouds, water circulation systems, and soundscapes intertwine to bring materiality and physical friction back to digital data.</p>
+                            </div>
+                        </div>
+                        <div class="image-placeholder">[ Foto / Instalación Mesa ]</div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 4. CONSUMO DE AGUA -->
+            <details>
+                <summary id="ir-sum-water">CONSUMO DE AGUA Y LA IA (MATERIAL Y TERRITORIO)</summary>
+                <div class="dropdown-content">
+                    <div class="grid-content">
+                        <div class="text-block">
+                            <!-- ES -->
+                            <div class="lang-block" data-lang="es">
+                                <p>Los Data Centers no son solo templos de silicio y cables; son, fundamentalmente, gigantescas máquinas térmicas. Los miles de servidores que procesan la Inteligencia Artificial generan temperaturas extremas que amenazan con derretir sus propios componentes. Para evitar el colapso del sistema, estas infraestructuras requieren sistemas de enfriamiento industrial que consumen millones de litros de agua dulce al día por evaporación.</p>
+                                <p>Bajo este modelo, la velocidad de procesamiento de la IA está directamente indexada al metabolismo hídrico de los territorios donde se implanta. Detrás de la aparente instantaneidad de la interfaz digital, existe un consumo silencioso pero devastador de las cuencas hidrográficas.</p>
+                            </div>
+                            <!-- EN -->
+                            <div class="lang-block" data-lang="en" style="display: none;">
+                                <p>Data Centers are not merely temples of silicon and wire; they are, fundamentally, massive thermal engines. Thousands of servers processing Artificial Intelligence generate extreme heat threatening system component failure. To prevent system collapse, these facilities require industrial cooling systems that consume millions of liters of fresh water daily through evaporation.</p>
+                                <p>Under this model, AI processing speed is directly indexed to the water metabolism of the territories where it is built. Behind the apparent instantaneity of the digital interface lies a silent yet devastating consumption of local watersheds.</p>
+                            </div>
+                        </div>
+                        <div class="image-placeholder">[ Foto / Recursos Hídricos ]</div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 5. TEAM -->
+            <details>
+                <summary id="ir-sum-team">TEAM</summary>
+                <div class="dropdown-content">
+                    <div class="text-block">
+                        <!-- ES -->
+                        <div class="lang-block" data-lang="es">
+                            <p><strong>Curadores:</strong><br>Serena Dambrosio, Nicolás Díaz Bejarano y Linda Schilling Cuellar</p>
+                            <p><strong>Diseño expositivo:</strong><br>Pedro Silva, Frank Hernández, Diego Alday, Sebastian Valois</p>
+                            <p><strong>Asistentes de investigación:</strong><br>Tomás Carbonell, Constanza Durán, Francisca Luco, Javier Toledo, Miguel Uribe, Luna Valdivia, Matías Valenzuela, José Tomás Labbé, Francisca Larraín, Daniel Aguayo</p>
+                            <p><strong>Colaboradores:</strong><br>Cristobal Mallea, Laura Reyes, Luna Figueroa, Vicente Sierra, Maida Bertholet, Nathan Humanante</p>
+                            <p><strong>Identidad Visual:</strong><br>Constanza Gaggero, Amalia Fernández y Alejandra Peralta</p>
+                            <p><strong>Dirección Audiovisual:</strong><br>Jaime San Martín, Rafael Guendelman Hales</p>
+                        </div>
+                        <!-- EN -->
+                        <div class="lang-block" data-lang="en" style="display: none;">
+                            <p><strong>Curators:</strong><br>Serena Dambrosio, Nicolás Díaz Bejarano, and Linda Schilling Cuellar</p>
+                            <p><strong>Exhibition Design:</strong><br>Pedro Silva, Frank Hernández, Diego Alday, Sebastian Valois</p>
+                            <p><strong>Research Assistants:</strong><br>Tomás Carbonell, Constanza Durán, Francisca Luco, Javier Toledo, Miguel Uribe, Luna Valdivia, Matías Valenzuela, José Tomás Labbé, Francisca Larraín, Daniel Aguayo</p>
+                            <p><strong>Collaborators:</strong><br>Cristobal Mallea, Laura Reyes, Luna Figueroa, Vicente Sierra, Maida Bertholet, Nathan Humanante</p>
+                            <p><strong>Visual Identity:</strong><br>Constanza Gaggero, Amalia Fernández, and Alejandra Peralta</p>
+                            <p><strong>Audiovisual Direction:</strong><br>Jaime San Martín, Rafael Guendelman Hales</p>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 6. VENICE 2025 -->
+            <details>
+                <summary id="ir-sum-venice">VENICE 2025 (LA EXHIBICIÓN)</summary>
+                <div class="dropdown-content">
+                    <!-- ES -->
+                    <div class="lang-block" data-lang="es">
+                        <p>Registro fotográfico, audiovisual y clippings de medios internacionales y nacionales.</p>
+                        <iframe class="iframe-container" src="about:blank" title="Venice Gallery ES"></iframe>
+                    </div>
+                    <!-- EN -->
+                    <div class="lang-block" data-lang="en" style="display: none;">
+                        <p>Photographic, audiovisual registry, and press clippings from national and international media.</p>
+                        <iframe class="iframe-container" src="about:blank" title="Venice Gallery EN"></iframe>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 7. ARCHIVO -->
+            <details>
+                <summary id="ir-sum-archive">ARCHIVO (BASE DE DATOS)</summary>
+                <div class="dropdown-content">
+                    <!-- ES -->
+                    <div class="lang-block" data-lang="es">
+                        <p>Research archive, entrevistas, directorio y mapa interactivo de Data Centers.</p>
+                        <iframe class="iframe-container" src="https://archivo-1.github.io/aiorepo.c/index.html?slugDirArc=dirarcdemos" title="Archivo Base de Datos ES"></iframe>
+                    </div>
+                    <!-- EN -->
+                    <div class="lang-block" data-lang="en" style="display: none;">
+                        <p>Research archive, interviews, directory, and interactive Data Center map.</p>
+                        <iframe class="iframe-container" src="https://archivo-1.github.io/aiorepo.c/index.html?slugDirArc=dirarcdemos" title="Archivo Base de Datos EN"></iframe>
+                    </div>
+                </div>
+            </details>
+
+            <!-- FOOTER -->
+            <footer class="site-footer">
+                <div class="footer-row">
+                    <span class="footer-label lbl-contact">Contacto & RRSS</span>
+                    <div class="logo-group">
+                        <a href="https://instagram.com" target="_blank" class="logo-link" title="Instagram"><img src="thumbnails/logo-instagram.png" alt="Instagram" class="logo-img"></a>
+                        <a href="https://vimeo.com" target="_blank" class="logo-link" title="Vimeo"><img src="thumbnails/logo-vimeo.png" alt="Vimeo" class="logo-img"></a>
+                        <a href="mailto:contacto@inteligenciasreflexivas.cl" class="logo-link" title="Email"><img src="thumbnails/logo-email.png" alt="Contacto Email" class="logo-img"></a>
+                    </div>
+                </div>
+                <div class="footer-row institutions-row">
+                    <span class="footer-label lbl-orgs">Organizaciones</span>
+                    <div class="logo-group">
+                        <a href="https://www.cultura.gob.cl" target="_blank" class="logo-link" title="MINCAP"><img src="thumbnails/logo-mincap.png" alt="Ministerio de las Culturas" class="logo-img"></a>
+                        <a href="https://www.udp.cl" target="_blank" class="logo-link" title="UDP"><img src="thumbnails/logo-udp.png" alt="Universidad Diego Portales" class="logo-img"></a>
+                        <a href="https://www.bibliotecanacional.gob.cl" target="_blank" class="logo-link" title="Biblioteca Nacional"><img src="thumbnails/logo-bn.png" alt="Biblioteca Nacional de Chile" class="logo-img"></a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- PÁGINA 2: DIGITAL VÉRTIGO -->
+        <div class="page-pane" id="dv-site">
+            <img src="thumbnails/digital-vertigo.png" alt="DIGITAL VÉRTIGO" class="title-logo-img">
+            <div class="subtitle" id="dv-subtitle">La bajada académica y pública en Chile</div>
+
+            <!-- 1. ABOUT DIGITAL VERTIGO -->
+            <details>
+                <summary id="dv-sum-about">ABOUT</summary>
+                <div class="dropdown-content">
+                    <div class="grid-content">
+                        <div class="text-block">
+                            <!-- ES -->
+                            <div class="lang-block" data-lang="es">
+                                <p>Digital Vértigo es un encuentro internacional e interdisciplinar que reúne a arquitectos, diseñadores, investigadores y teóricos de los estudios de medios para reflexionar críticamente sobre las arquitecturas de la información.</p>
+                                <p>El proyecto funciona como una plataforma pública para interrogar la relación entre las infraestructuras de almacenamiento y los procesos de digitalización del conocimiento, utilizándolos desde una lente strictly material, espacial y ecológica.</p>
+                            </div>
+                            <!-- EN -->
+                            <div class="lang-block" data-lang="en" style="display: none;">
+                                <p>Digital Vertigo is an international and interdisciplinary symposium bringing together architects, designers, researchers, and media theorists to critically reflect on information architectures.</p>
+                                <p>The project acts as a public platform to interrogate the connection between storage infrastructures and knowledge digitization processes through a strictly material, spatial, and ecological lens.</p>
+                            </div>
+                        </div>
+                        <div class="image-placeholder">[ Foto Digital Vértigo ]</div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 2. TEAM + INSTITUCIONES -->
+            <details>
+                <summary id="dv-sum-team">TEAM + INSTITUCIONES</summary>
+                <div class="dropdown-content">
+                    <div class="text-block">
+                        <!-- ES -->
+                        <div class="lang-block" data-lang="es">
+                            <p><strong>Equipo Curatorial y Dirección (Chile):</strong><br>
+                            - Serena Dambrosio: Curadora e Investigadora principal.<br>
+                            - Nicolás Díaz Bejarano: Curador e Investigador principal.<br>
+                            - Linda Schilling Cuellar: Curadora, Investigadora y Académica UDP.</p>
+                            
+                            <p><strong>Comité Asesor Científico e Invitados Internacionales:</strong><br>
+                            Shannon Mattern, Marina Otero Verzier, Susan Schuppli, Ana Valdivia, Laura Kurgan, Fanny López, Formafantasma (Andrea Trimarchi & Simone Farresin).</p>
+                            
+                            <p><strong>Asistentes de Investigación y Producción:</strong><br>
+                            Tomás Carbonell, Nathan Humanante, Luna Valdivia, Álvaro Andueza, Fabiana Calderón.</p>
+
+                            <p><strong>Identidad Gráfica:</strong><br>
+                            Antonieta, Constanza Almazar.</p>
+                        </div>
+                        <!-- EN -->
+                        <div class="lang-block" data-lang="en" style="display: none;">
+                            <p><strong>Curatorial Team & Leadership (Chile):</strong><br>
+                            - Serena Dambrosio: Lead Curator & Researcher.<br>
+                            - Nicolás Díaz Bejarano: Lead Curator & Researcher.<br>
+                            - Linda Schilling Cuellar: Curator, Researcher & UDP Professor.</p>
+                            
+                            <p><strong>Scientific Advisory Board & International Guests:</strong><br>
+                            Shannon Mattern, Marina Otero Verzier, Susan Schuppli, Ana Valdivia, Laura Kurgan, Fanny López, Formafantasma (Andrea Trimarchi & Simone Farresin).</p>
+                            
+                            <p><strong>Research & Production Assistants:</strong><br>
+                            Tomás Carbonell, Nathan Humanante, Luna Valdivia, Álvaro Andueza, Fabiana Calderón.</p>
+
+                            <p><strong>Graphic Identity:</strong><br>
+                            Antonieta, Constanza Almazar.</p>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 3. INSTITUCIONES / RESPALDO -->
+            <details>
+                <summary id="dv-sum-inst">INSTITUCIONES / RESPALDO E INFRAESTRUCTURA</summary>
+                <div class="dropdown-content">
+                    <div class="text-block">
+                        <!-- ES -->
+                        <div class="lang-block" data-lang="es">
+                            <p>Este proyecto se consolida a través de una red institucional estratégica que une las políticas públicas, la excelencia académica y el resguardo del patrimonio cultural en Chile:</p>
+                            <p><strong>Ministerio de las Culturas, las Artes y el Patrimonio (MINCAP):</strong> Institución gubernamental que comisiona el Pabellón de Chile en la 19ª Bienal de Arquitectura de Venecia 2025.</p>
+                            <p><strong>Facultad de Arquitectura, Arte y Diseño (FAAD) - Universidad Diego Portales:</strong> Núcleo académico y pedagógico del proyecto.</p>
+                            <p><strong>Biblioteca Nicanor Parra (UDP):</strong> Sede principal para las sesiones de investigación y exhibición.</p>
+                            <p><strong>Biblioteca Nacional de Chile:</strong> Pilar patrimonial que asegura que las reflexiones queden integradas en la memoria cultural del país.</p>
+                        </div>
+                        <!-- EN -->
+                        <div class="lang-block" data-lang="en" style="display: none;">
+                            <p>This project is consolidated through a strategic institutional network bridging public policy, academic excellence, and cultural heritage preservation in Chile:</p>
+                            <p><strong>Ministry of Cultures, Arts and Heritage (MINCAP):</strong> Government institution commissioning the Chilean Pavilion at the 19th Venice Architecture Biennale 2025.</p>
+                            <p><strong>Faculty of Architecture, Art and Design (FAAD) - Universidad Diego Portales:</strong> Academic and pedagogical core of the project.</p>
+                            <p><strong>Nicanor Parra Library (UDP):</strong> Main venue for research sessions and exhibitions.</p>
+                            <p><strong>National Library of Chile:</strong> Heritage pillar ensuring these reflections remain integrated into the country's cultural memory.</p>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 4. PROGRAMA -->
+            <details>
+                <summary id="dv-sum-prog">PROGRAMA (CALENDARIO DINÁMICO)</summary>
+                <div class="dropdown-content">
+                    <!-- ES -->
+                    <div class="lang-block" data-lang="es">
+                        <p>Bloques: Sesiones cerradas, seminarios, visitas guiadas y charlas públicas.</p>
+                        <iframe class="iframe-container" src="about:blank" title="Programa Google Sheets ES"></iframe>
+                    </div>
+                    <!-- EN -->
+                    <div class="lang-block" data-lang="en" style="display: none;">
+                        <p>Sessions: Closed workshops, seminars, guided tours, and public talks.</p>
+                        <iframe class="iframe-container" src="about:blank" title="Programa Google Sheets EN"></iframe>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 5. GALLERY -->
+            <details>
+                <summary id="dv-sum-gallery">GALLERY</summary>
+                <div class="dropdown-content">
+                    <!-- ES -->
+                    <div class="lang-block" data-lang="es">
+                        <p>Fotos de los encuentros en Santiago y las visitas a los archivos en las instituciones.</p>
+                        <iframe class="iframe-container" src="about:blank" title="Gallery Digital Vertigo ES"></iframe>
+                    </div>
+                    <!-- EN -->
+                    <div class="lang-block" data-lang="en" style="display: none;">
+                        <p>Photos of gatherings in Santiago and institutional archive visits.</p>
+                        <iframe class="iframe-container" src="about:blank" title="Gallery Digital Vertigo EN"></iframe>
+                    </div>
+                </div>
+            </details>
+
+            <!-- FOOTER -->
+            <footer class="site-footer">
+                <div class="footer-row">
+                    <span class="footer-label lbl-contact">Contacto & RRSS</span>
+                    <div class="logo-group">
+                        <a href="https://instagram.com" target="_blank" class="logo-link" title="Instagram"><img src="thumbnails/logo-instagram.png" alt="Instagram" class="logo-img"></a>
+                        <a href="https://vimeo.com" target="_blank" class="logo-link" title="Vimeo"><img src="thumbnails/logo-vimeo.png" alt="Vimeo" class="logo-img"></a>
+                        <a href="mailto:contacto@digitalvertigo.cl" class="logo-link" title="Email"><img src="thumbnails/logo-email.png" alt="Contacto Email" class="logo-img"></a>
+                    </div>
+                </div>
+                <div class="footer-row institutions-row">
+                    <span class="footer-label lbl-orgs">Organizaciones</span>
+                    <div class="logo-group">
+                        <a href="https://www.cultura.gob.cl" target="_blank" class="logo-link" title="MINCAP"><img src="thumbnails/logo-mincap.png" alt="Ministerio de las Culturas" class="logo-img"></a>
+                        <a href="https://www.udp.cl" target="_blank" class="logo-link" title="UDP"><img src="thumbnails/logo-udp.png" alt="Universidad Diego Portales" class="logo-img"></a>
+                        <a href="https://www.bibliotecanacional.gob.cl" target="_blank" class="logo-link" title="Biblioteca Nacional"><img src="thumbnails/logo-bn.png" alt="Biblioteca Nacional de Chile" class="logo-img"></a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+    </div>
+
+    <script>
+        const container = document.getElementById('siteContainer');
+        const flapText = document.getElementById('flapText');
+        const langBtn = document.getElementById('langBtn');
+        let currentSide = 'ir';
+        let currentLang = 'es';
+
+        // Solo se mantienen títulos cortos, subtítulos y labels en el objeto
+        const translations = {
+            es: {
+                irSubtitle: "Pabellón de Chile · 19° Bienal de Arquitectura de Venecia 2025",
+                irContextTitle: "CONTEXTO DEL PABELLÓN DE CHILE",
+                irProblemTitle: "PROBLEMÁTICA DE LOS DATA CENTERS",
+                irWaterTitle: "CONSUMO DE AGUA Y LA IA (MATERIAL Y TERRITORIO)",
+                irTeamTitle: "TEAM",
+                irVeniceTitle: "VENICE 2025 (LA EXHIBICIÓN)",
+                irArchiveTitle: "ARCHIVO (BASE DE DATOS)",
+                dvSubtitle: "La bajada académica y pública en Chile",
+                dvTeamTitle: "TEAM + INSTITUCIONES",
+                dvInstTitle: "INSTITUCIONES / RESPALDO E INFRAESTRUCTURA",
+                dvProgTitle: "PROGRAMA (CALENDARIO DINÁMICO)",
+                dvGalleryTitle: "GALLERY",
+                lblContact: "Contacto & RRSS",
+                lblOrgs: "Organizaciones"
+            },
+            en: {
+                irSubtitle: "Chile Pavilion · 19th International Architecture Exhibition - La Biennale di Venezia 2025",
+                irContextTitle: "CHILE PAVILION CONTEXT",
+                irProblemTitle: "DATA CENTER ISSUES",
+                irWaterTitle: "WATER CONSUMPTION & AI (MATERIAL & TERRITORY)",
+                irTeamTitle: "TEAM",
+                irVeniceTitle: "VENICE 2025 (THE EXHIBITION)",
+                irArchiveTitle: "ARCHIVE (DATABASE)",
+                dvSubtitle: "Academic and public outreach in Chile",
+                dvTeamTitle: "TEAM + INSTITUTIONS",
+                dvInstTitle: "INSTITUTIONS / SUPPORT & INFRASTRUCTURE",
+                dvProgTitle: "PROGRAM (DYNAMIC CALENDAR)",
+                dvGalleryTitle: "GALLERY",
+                lblContact: "Contact & Socials",
+                lblOrgs: "Organizations"
+            }
+        };
+
+        function toggleSites() {
+            if (currentSide === 'ir') {
+                container.style.transform = 'translateX(-50%)';
+                flapText.innerHTML = '&lt; INTELIGENCIAS REFLEXIVAS';
+                currentSide = 'dv';
+            } else {
+                container.style.transform = 'translateX(0)';
+                flapText.innerHTML = 'DIGITAL VÉRTIGO &gt;';
+                currentSide = 'ir';
+            }
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            langBtn.textContent = currentLang === 'es' ? 'EN' : 'ES';
+
+            // 1. Mostrar/Ocultar bloques HTML e iframes según atributo data-lang
+            document.querySelectorAll('.lang-block').forEach(el => {
+                if (el.getAttribute('data-lang') === currentLang) {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+
+            // 2. Actualizar títulos de las pestañas
+            const t = translations[currentLang];
+
+            document.getElementById('ir-subtitle').textContent = t.irSubtitle;
+            document.getElementById('dv-subtitle').textContent = t.dvSubtitle;
+
+            document.getElementById('ir-sum-context').textContent = t.irContextTitle;
+            document.getElementById('ir-sum-problem').textContent = t.irProblemTitle;
+            document.getElementById('ir-sum-water').textContent = t.irWaterTitle;
+            document.getElementById('ir-sum-team').textContent = t.irTeamTitle;
+            document.getElementById('ir-sum-venice').textContent = t.irVeniceTitle;
+            document.getElementById('ir-sum-archive').textContent = t.irArchiveTitle;
+
+            document.getElementById('dv-sum-team').textContent = t.dvTeamTitle;
+            document.getElementById('dv-sum-inst').textContent = t.dvInstTitle;
+            document.getElementById('dv-sum-prog').textContent = t.dvProgTitle;
+            document.getElementById('dv-sum-gallery').textContent = t.dvGalleryTitle;
+
+            document.querySelectorAll('.lbl-contact').forEach(el => el.textContent = t.lblContact);
+            document.querySelectorAll('.lbl-orgs').forEach(el => el.textContent = t.lblOrgs);
+        }
+
+        // Acordeón exclusivo
+        const allDetails = document.querySelectorAll('details');
+        allDetails.forEach((details) => {
+            details.addEventListener('toggle', (e) => {
+                if (details.open) {
+                    const currentPane = details.closest('.page-pane');
+                    const siblingDetails = currentPane.querySelectorAll('details');
+                    
+                    siblingDetails.forEach((item) => {
+                        if (item !== details) {
+                            item.removeAttribute('open');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
