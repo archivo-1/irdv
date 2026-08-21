@@ -14,9 +14,8 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow-x: hidden;
-            overflow-y: hidden;
-            background-color: #000; /* Fallback por si el video tarda en cargar */
+            overflow: hidden;
+            background-color: #000;
             color: #fff;
             font-family: sans-serif;
             touch-action: pan-y;
@@ -27,9 +26,9 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0; /* Posicionado detrás de la interfaz activa pero sobre el canvas base */
             overflow: hidden;
             pointer-events: none;
         }
@@ -38,6 +37,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .bg-overlay {
@@ -46,7 +46,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.45); /* Oscurecido sutil para legibilidad de texto */
         }
 
         /* --- BOTÓN DE IDIOMA --- */
@@ -75,6 +75,8 @@
 
         /* Contenedor maestro */
         .site-container {
+            position: relative;
+            z-index: 10; /* Eleva el texto sobre el video */
             display: flex;
             width: 200%;
             height: 100vh;
@@ -98,14 +100,14 @@
             scroll-behavior: smooth;
             display: block;
             -webkit-overflow-scrolling: touch;
-            background: transparent;
+            background: transparent !important;
         }
 
         .page-pane::-webkit-scrollbar {
             width: 8px;
         }
         .page-pane::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.3);
         }
         .page-pane::-webkit-scrollbar-thumb {
             background: #333;
@@ -116,7 +118,7 @@
         }
 
         #ir-site, #dv-site {
-            background-color: transparent;
+            background-color: transparent !important;
         }
 
         .title-logo-img {
@@ -401,7 +403,7 @@
 
     <!-- VIDEO EN LOOP DE FONDO -->
     <div class="bg-video-container">
-        <video class="bg-video" id="bgVideo" autoplay loop muted playsinline>
+        <video class="bg-video" id="bgVideo" autoplay loop muted playsinline preload="auto">
             <source src="assets/bgvideo.mp4" type="video/mp4">
         </video>
         <div class="bg-overlay"></div>
@@ -694,7 +696,6 @@
         let currentSide = 'ir';
         let currentLang = 'es';
 
-        // Títulos de las pestañas según el lado
         const pageTitles = {
             ir: "Inteligencias Reflexivas — Pabellón de Chile",
             dv: "Digital Vértigo — Encuentro Internacional"
@@ -748,15 +749,16 @@
                 container.style.transform = 'translateX(-50%)';
                 flapText.innerHTML = '&lt; INTELIGENCIAS REFLEXIVAS';
                 docTitle.textContent = pageTitles.dv;
+                window.location.hash = 'digitalvertigo';
             } else {
                 container.style.transform = 'translateX(0)';
                 flapText.innerHTML = 'DIGITAL VÉRTIGO &gt;';
                 docTitle.textContent = pageTitles.ir;
+                window.location.hash = 'inteligenciasreflexivas';
             }
 
             if (!animate) {
-                // Forzar reflown e instalar nuevamente las animaciones para clics posteriores
-                void container.offsetWidth;
+                void container.offsetWidth; // Fuerza el reflow de CSS
                 setTimeout(() => {
                     container.classList.remove('no-transition');
                 }, 50);
@@ -766,12 +768,6 @@
         function toggleSites() {
             const nextSide = (currentSide === 'ir') ? 'dv' : 'ir';
             setSide(nextSide, true);
-
-            // Cambia la URL sin refrescar si estamos en dominio .xyz
-            const targetDomain = nextSide === 'dv' ? 'https://digitalvertigo.xyz/' : 'https://inteligenciasreflexivas.xyz/';
-            if (window.location.hostname.includes('xyz')) {
-                window.history.pushState({}, '', targetDomain);
-            }
         }
 
         function toggleLanguage() {
@@ -827,16 +823,23 @@
         // Inicialización al cargar el DOM
         window.addEventListener('DOMContentLoaded', () => {
             const hostname = window.location.hostname;
+            const hash = window.location.hash;
             
-            // Garantizar reproducción de video en Live Server / Navegadores restrictivos
+            // Iniciar video con garantía de fallback
             if (bgVideo) {
-                bgVideo.play().catch(() => {
-                    console.log("El navegador bloqueó la autorreproducción automática del video.");
-                });
+                const playPromise = bgVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        // Si autostart se bloquea por políticas del navegador
+                        document.body.addEventListener('click', () => {
+                            bgVideo.play();
+                        }, { once: true });
+                    });
+                }
             }
 
-            // Posicionamiento inmediato (sin animación inicial)
-            if (hostname.includes('digitalvertigo')) {
+            // Posicionamiento inmediato por dominio o hash (sin animación inicial)
+            if (hostname.includes('digitalvertigo') || hash === '#digitalvertigo') {
                 setSide('dv', false);
             } else {
                 setSide('ir', false);
