@@ -806,6 +806,26 @@
             });
         });
     </script>
+    <script>
+    // Detecta el dominio actual desde el que se está cargando la página
+    window.addEventListener('DOMContentLoaded', () => {
+        const hostname = window.location.hostname;
+        
+        // Si entran por digitalvertigo, movemos el contenedor maestro a la izquierda (-50%)
+        if (hostname.includes('digitalvertigo')) {
+            container.style.transform = 'translateX(-50%)';
+            flapText.innerHTML = '&lt; INTELIGENCIAS REFLEXIVAS';
+            currentSide = 'dv';
+        } 
+        // Si entran por inteligenciasreflexivas, se queda en la posición inicial (0)
+        else if (hostname.includes('inteligenciasreflexivas')) {
+            container.style.transform = 'translateX(0)';
+            flapText.innerHTML = 'DIGITAL VÉRTIGO &gt;';
+            currentSide = 'ir';
+        }
+    });
+</script>
+    
 
 </body>
 </html>
