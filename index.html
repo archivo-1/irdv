@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Inteligencias Reflexivas - Digital Vértigo</title>
+    <title id="docTitle">Inteligencias Reflexivas — Pabellón de Chile</title>
     <style>
         * {
             box-sizing: border-box;
@@ -82,6 +82,11 @@
             transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
             will-change: transform;
             background: transparent;
+        }
+
+        /* Clase utilitaria para deshabilitar animación en la carga inicial */
+        .no-transition {
+            transition: none !important;
         }
 
         .page-pane {
@@ -396,7 +401,7 @@
 
     <!-- VIDEO EN LOOP DE FONDO -->
     <div class="bg-video-container">
-        <video class="bg-video" autoplay loop muted playsinline>
+        <video class="bg-video" id="bgVideo" autoplay loop muted playsinline>
             <source src="assets/bgvideo.mp4" type="video/mp4">
         </video>
         <div class="bg-overlay"></div>
@@ -411,7 +416,7 @@
     </div>
 
     <!-- Contenedor maestro -->
-    <div class="site-container" id="siteContainer">
+    <div class="site-container no-transition" id="siteContainer">
         
         <!-- PÁGINA 1: INTELIGENCIAS REFLEXIVAS -->
         <div class="page-pane" id="ir-site">
@@ -420,7 +425,7 @@
 
             <!-- 1. ABOUT -->
             <details>
-                <summary id="ir-sum-about">ABOUT</summary>
+                <summary id="ir-sum-about">SOBRE EL PABELLÓN</summary>
                 <div class="dropdown-content">
                     <div class="grid-content">
                         <div class="text-block">
@@ -440,7 +445,7 @@
             
             <!-- 2. TEAM -->
             <details>
-                <summary id="ir-sum-team">TEAM</summary>
+                <summary id="ir-sum-team">EQUIPO</summary>
                 <div class="dropdown-content">
                     <div class="text-block">
                         <!-- ES -->
@@ -539,7 +544,7 @@
 
             <!-- 1. ABOUT DIGITAL VERTIGO -->
             <details>
-                <summary id="dv-sum-about">ABOUT</summary>
+                <summary id="dv-sum-about">SOBRE EL ENCUENTRO</summary>
                 <div class="dropdown-content">
                     <div class="grid-content">
                         <div class="text-block">
@@ -561,7 +566,7 @@
 
             <!-- 2. TEAM -->
             <details>
-                <summary id="dv-sum-team">TEAM</summary>
+                <summary id="dv-sum-team">EQUIPO</summary>
                 <div class="dropdown-content">
                     <div class="text-block">
                         <!-- ES -->
@@ -683,19 +688,28 @@
         const container = document.getElementById('siteContainer');
         const flapText = document.getElementById('flapText');
         const langBtn = document.getElementById('langBtn');
+        const docTitle = document.getElementById('docTitle');
+        const bgVideo = document.getElementById('bgVideo');
+
         let currentSide = 'ir';
         let currentLang = 'es';
+
+        // Títulos de las pestañas según el lado
+        const pageTitles = {
+            ir: "Inteligencias Reflexivas — Pabellón de Chile",
+            dv: "Digital Vértigo — Encuentro Internacional"
+        };
 
         const translations = {
             es: {
                 irSubtitle: "Pabellón de Chile · 19° Bienal de Arquitectura de Venecia 2025",
-                irAboutTitle: "ABOUT",
-                irTeamTitle: "TEAM",
+                irAboutTitle: "SOBRE EL PABELLÓN",
+                irTeamTitle: "EQUIPO",
                 irVeniceTitle: "VENICE 2025 (LA EXHIBICIÓN)",
                 irArchiveTitle: "ARCHIVO (BASE DE DATOS)",
                 dvSubtitle: "La bajada académica y pública en Chile",
-                dvAboutTitle: "ABOUT",
-                dvTeamTitle: "TEAM",
+                dvAboutTitle: "SOBRE EL ENCUENTRO",
+                dvTeamTitle: "EQUIPO",
                 dvGuestsTitle: "INVITADOS",
                 dvInstTitle: "INSTITUCIONES",
                 dvProgTitle: "PROGRAMA (CALENDARIO DINÁMICO)",
@@ -721,15 +735,42 @@
             }
         };
 
-        function toggleSites() {
-            if (currentSide === 'ir') {
+        function setSide(side, animate = true) {
+            currentSide = side;
+            
+            if (!animate) {
+                container.classList.add('no-transition');
+            } else {
+                container.classList.remove('no-transition');
+            }
+
+            if (side === 'dv') {
                 container.style.transform = 'translateX(-50%)';
                 flapText.innerHTML = '&lt; INTELIGENCIAS REFLEXIVAS';
-                currentSide = 'dv';
+                docTitle.textContent = pageTitles.dv;
             } else {
                 container.style.transform = 'translateX(0)';
                 flapText.innerHTML = 'DIGITAL VÉRTIGO &gt;';
-                currentSide = 'ir';
+                docTitle.textContent = pageTitles.ir;
+            }
+
+            if (!animate) {
+                // Forzar reflown e instalar nuevamente las animaciones para clics posteriores
+                void container.offsetWidth;
+                setTimeout(() => {
+                    container.classList.remove('no-transition');
+                }, 50);
+            }
+        }
+
+        function toggleSites() {
+            const nextSide = (currentSide === 'ir') ? 'dv' : 'ir';
+            setSide(nextSide, true);
+
+            // Cambia la URL sin refrescar si estamos en dominio .xyz
+            const targetDomain = nextSide === 'dv' ? 'https://digitalvertigo.xyz/' : 'https://inteligenciasreflexivas.xyz/';
+            if (window.location.hostname.includes('xyz')) {
+                window.history.pushState({}, '', targetDomain);
             }
         }
 
@@ -737,7 +778,6 @@
             currentLang = currentLang === 'es' ? 'en' : 'es';
             langBtn.textContent = currentLang === 'es' ? 'EN' : 'ES';
 
-            // 1. Ocultar o mostrar bloques de texto según data-lang
             document.querySelectorAll('.lang-block').forEach(el => {
                 if (el.getAttribute('data-lang') === currentLang) {
                     el.style.display = 'block';
@@ -746,7 +786,6 @@
                 }
             });
 
-            // 2. Actualizar títulos de acordeones y textos estáticos
             const t = translations[currentLang];
 
             document.getElementById('ir-subtitle').textContent = t.irSubtitle;
@@ -768,10 +807,10 @@
             document.querySelectorAll('.lbl-orgs').forEach(el => el.textContent = t.lblOrgs);
         }
 
-        // Cierre automático de otros elementos desplegables dentro del mismo panel
+        // Cierre automático de acordeones
         const allDetails = document.querySelectorAll('details');
         allDetails.forEach((details) => {
-            details.addEventListener('toggle', (e) => {
+            details.addEventListener('toggle', () => {
                 if (details.open) {
                     const currentPane = details.closest('.page-pane');
                     const siblingDetails = currentPane.querySelectorAll('details');
@@ -784,20 +823,23 @@
                 }
             });
         });
-    </script>
-    <script>
+
+        // Inicialización al cargar el DOM
         window.addEventListener('DOMContentLoaded', () => {
             const hostname = window.location.hostname;
             
+            // Garantizar reproducción de video en Live Server / Navegadores restrictivos
+            if (bgVideo) {
+                bgVideo.play().catch(() => {
+                    console.log("El navegador bloqueó la autorreproducción automática del video.");
+                });
+            }
+
+            // Posicionamiento inmediato (sin animación inicial)
             if (hostname.includes('digitalvertigo')) {
-                container.style.transform = 'translateX(-50%)';
-                flapText.innerHTML = '&lt; INTELIGENCIAS REFLEXIVAS';
-                currentSide = 'dv';
-            } 
-            else if (hostname.includes('inteligenciasreflexivas')) {
-                container.style.transform = 'translateX(0)';
-                flapText.innerHTML = 'DIGITAL VÉRTIGO &gt;';
-                currentSide = 'ir';
+                setSide('dv', false);
+            } else {
+                setSide('ir', false);
             }
         });
     </script>
