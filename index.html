@@ -28,7 +28,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 0; /* Posicionado detrás de la interfaz activa pero sobre el canvas base */
+            z-index: 0;
             overflow: hidden;
             pointer-events: none;
         }
@@ -46,7 +46,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.45); /* Oscurecido sutil para legibilidad de texto */
+            background: rgba(0, 0, 0, 0.45);
         }
 
         /* --- BOTÓN DE IDIOMA --- */
@@ -76,7 +76,7 @@
         /* Contenedor maestro */
         .site-container {
             position: relative;
-            z-index: 10; /* Eleva el texto sobre el video */
+            z-index: 10;
             display: flex;
             width: 200%;
             height: 100vh;
@@ -239,6 +239,45 @@
             border-radius: 4px;
         }
 
+        /* --- GRILLA Y ESTILOS PARA LOGOS INSTITUCIONALES --- */
+        .inst-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .inst-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .inst-subtitle {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .inst-logo-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem 2.5rem;
+            margin-top: 1rem;
+        }
+
+        .inst-logo-item {
+            max-height: 48px;
+            max-width: 180px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            opacity: 0.85;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+
+        .inst-logo-item:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
         .site-footer {
             margin-top: 6rem;
             padding-top: 3rem;
@@ -383,6 +422,15 @@
                 height: 320px;
             }
 
+            .inst-logo-grid {
+                gap: 1.5rem;
+            }
+
+            .inst-logo-item {
+                max-height: 38px;
+                max-width: 140px;
+            }
+
             .site-footer {
                 margin-top: 4rem;
             }
@@ -491,12 +539,12 @@
                     <!-- ES -->
                     <div class="lang-block" data-lang="es">
                         <p>Registro fotográfico, audiovisual y clippings de medios internacionales y nacionales.</p>
-                        <iframe class="iframe-container" src="about:blank" title="Venice Gallery ES"></iframe>
+                        <iframe class="iframe-container" src="/galeria_a.html" title="Venice Gallery ES"></iframe>
                     </div>
                     <!-- EN -->
                     <div class="lang-block" data-lang="en" style="display: none;">
                         <p>Photographic, audiovisual registry, and press clippings from national and international media.</p>
-                        <iframe class="iframe-container" src="https://irdv-irdv.vercel.app/galeria_a.html" title="Venice Gallery EN"></iframe>
+                        <iframe class="iframe-container" src="about:blank" title="Venice Gallery EN"></iframe>
                     </div>
                 </div>
             </details>
@@ -553,7 +601,7 @@
                             <!-- ES -->
                             <div class="lang-block" data-lang="es">
                                 <p>Digital Vértigo es un encuentro internacional e interdisciplinar que reúne a arquitectos, diseñadores, investigadores y teóricos de los estudios de medios para reflexionar críticamente sobre las arquitecturas de la información.</p>
-                                <p>El proyecto funciona como una plataforma pública para interrogar la relación entre las infraestructuras de almacenamiento y los procesos de digitalización del conocimiento, utilizándolos desde una lente estrictamente material, espacial y ecológica.</p>
+                                <p>El proyecto funciona como una plataforma pública para interrogar la relación entre las infraestructuras de almacenamiento y los procesos de digitalización del conocimiento, utilizándolos desde una lente strictly material, espacial y ecológica.</p>
                             </div>
                             <!-- EN -->
                             <div class="lang-block" data-lang="en" style="display: none;">
@@ -610,20 +658,55 @@
                 </div>
             </details>
 
-            <!-- 4. INSTITUCIONES -->
+            <!-- 4. INSTITUCIONES (CON LOGOS) -->
             <details>
                 <summary id="dv-sum-inst">INSTITUCIONES</summary>
                 <div class="dropdown-content">
                     <div class="text-block">
                         <!-- ES -->
                         <div class="lang-block" data-lang="es">
-                            <p><strong>Auspician</strong><br>Fondart Nacional, Organización de muestras, ferias y encuentros, Emergentes, folio 834718 <br>Fondo Semilla de Impacto - 2026 del Pulitzer Center</p>
-                            <p><strong>Con el apoyo de</strong><br>Fondecyt Postdoctorado 2025 ANID, Folio 3250115<br>Facultad de Arquitectura, Arte, Diseño, Universidad Diego Portales <br>Biblioteca Nicanor Parra, Universidad Diego Portales <br>Biblioteca Nacional de Chile<br>Palacio Pereira</p>
+                            <div class="inst-block">
+                                <p class="inst-subtitle"><strong>Auspician</strong></p>
+                                <p>Fondart Nacional, Organización de muestras, ferias y encuentros, Emergentes, folio 834718<br>Fondo Semilla de Impacto - 2026 del Pulitzer Center</p>
+                                <div class="inst-logo-grid">
+                                    <img src="assets/MinCienciasArtes Patrimonio.png" alt="Ministerio de las Culturas, las Artes y el Patrimonio" class="inst-logo-item">
+                                    <img src="assets/Pulitzer Center.svg" alt="Pulitzer Center" class="inst-logo-item">
+                                </div>
+                            </div>
+                            <div class="inst-block">
+                                <p class="inst-subtitle"><strong>Con el apoyo de</strong></p>
+                                <p>Fondecyt Postdoctorado 2025 ANID, Folio 3250115<br>Facultad de Arquitectura, Arte, Diseño, Universidad Diego Portales<br>Biblioteca Nicanor Parra, Universidad Diego Portales<br>Biblioteca Nacional de Chile<br>Palacio Pereira</p>
+                                <div class="inst-logo-grid">
+                                    <img src="assets/MINCIENCIA + ANID.svg" alt="MinCiencia + ANID" class="inst-logo-item">
+                                    <img src="assets/UDP.png" alt="Universidad Diego Portales" class="inst-logo-item">
+                                    <img src="assets/bibliotecaudp.png" alt="Biblioteca Nicanor Parra UDP" class="inst-logo-item">
+                                    <img src="assets/Biobliotca Nacional de Chile.png" alt="Biblioteca Nacional de Chile" class="inst-logo-item">
+                                    <img src="assets/PalacioPereira.svg" alt="Palacio Pereira" class="inst-logo-item">
+                                </div>
+                            </div>
                         </div>
+
                         <!-- EN -->
                         <div class="lang-block" data-lang="en" style="display: none;">
-                            <p><strong>Sponsors:</strong><br>National Fondart, Organization of Exhibitions, Fairs and Gatherings, Emerging Category, Folio 834718<br>Pulitzer Center Impact Seed Fund - 2026</p>
-                            <p><strong>Supported by:</strong><br>ANID Postdoctoral Fondecyt 2025, Folio 3250115<br>Faculty of Architecture, Art and Design, Universidad Diego Portales<br>Nicanor Parra Library, Universidad Diego Portales<br>National Library of Chile<br>Palacio Pereira</p>
+                            <div class="inst-block">
+                                <p class="inst-subtitle"><strong>Sponsors:</strong></p>
+                                <p>National Fondart, Organization of Exhibitions, Fairs and Gatherings, Emerging Category, Folio 834718<br>Pulitzer Center Impact Seed Fund - 2026</p>
+                                <div class="inst-logo-grid">
+                                    <img src="assets/MinCienciasArtes Patrimonio.png" alt="Ministry of Cultures, Arts and Heritage" class="inst-logo-item">
+                                    <img src="assets/Pulitzer Center.svg" alt="Pulitzer Center" class="inst-logo-item">
+                                </div>
+                            </div>
+                            <div class="inst-block">
+                                <p class="inst-subtitle"><strong>Supported by:</strong></p>
+                                <p>ANID Postdoctoral Fondecyt 2025, Folio 3250115<br>Faculty of Architecture, Art and Design, Universidad Diego Portales<br>Nicanor Parra Library, Universidad Diego Portales<br>National Library of Chile<br>Palacio Pereira</p>
+                                <div class="inst-logo-grid">
+                                    <img src="assets/MINCIENCIA + ANID.svg" alt="MinCiencia + ANID" class="inst-logo-item">
+                                    <img src="assets/UDP.png" alt="Universidad Diego Portales" class="inst-logo-item">
+                                    <img src="assets/bibliotecaudp.png" alt="Biblioteca Nicanor Parra UDP" class="inst-logo-item">
+                                    <img src="assets/Biobliotca Nacional de Chile.png" alt="National Library of Chile" class="inst-logo-item">
+                                    <img src="assets/PalacioPereira.svg" alt="Palacio Pereira" class="inst-logo-item">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -646,9 +729,9 @@
                 </div>
             </details>
 
-            <!-- 6. GALLERY -->
+            <!-- 6. GALERÍA -->
             <details>
-                <summary id="dv-sum-gallery">GALLERY</summary>
+                <summary id="dv-sum-gallery">GALERÍA</summary>
                 <div class="dropdown-content">
                     <!-- ES -->
                     <div class="lang-block" data-lang="es">
@@ -714,7 +797,7 @@
                 dvGuestsTitle: "INVITADOS",
                 dvInstTitle: "INSTITUCIONES",
                 dvProgTitle: "PROGRAMA (CALENDARIO DINÁMICO)",
-                dvGalleryTitle: "GALLERY",
+                dvGalleryTitle: "GALERÍA",
                 lblContact: "Contacto & RRSS",
                 lblOrgs: "Organizaciones"
             },
@@ -830,7 +913,6 @@
                 const playPromise = bgVideo.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(() => {
-                        // Si autostart se bloquea por políticas del navegador
                         document.body.addEventListener('click', () => {
                             bgVideo.play();
                         }, { once: true });
