@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title id="docTitle">Inteligencias Reflexivas — Pabellón de Chile</title>
+    <title id="docTitle">Inteligencias Reflexivas</title>
     <style>
         * {
             box-sizing: border-box;
@@ -21,7 +21,7 @@
             touch-action: pan-y;
         }
 
-        /* --- VIDEO DE FONDO --- */
+        /* --- bgvideo --- */
         .bg-video-container {
             position: fixed;
             top: 0;
@@ -49,7 +49,7 @@
             background: rgba(0, 0, 0, 0.45);
         }
 
-        /* --- BOTÓN DE IDIOMA --- */
+        /* --- lang toggle --- */
         .lang-toggle {
             position: fixed;
             top: 20px;
@@ -86,7 +86,7 @@
             background: transparent;
         }
 
-        /* Clase utilitaria para deshabilitar animación en la carga inicial */
+        /* deshabilita animación en la carga inicial */
         .no-transition {
             transition: none !important;
         }
@@ -449,7 +449,7 @@
 </head>
 <body>
 
-    <!-- VIDEO EN LOOP DE FONDO -->
+    <!-- BGVIDEO -->
     <div class="bg-video-container">
         <video class="bg-video" id="bgVideo" autoplay loop muted playsinline preload="auto">
             <source src="assets/bgvideo.mp4" type="video/mp4">
@@ -457,10 +457,10 @@
         <div class="bg-overlay"></div>
     </div>
 
-    <!-- BOTÓN CAMBIO DE IDIOMA -->
+    <!-- TOGGLE DE LANG -->
     <button class="lang-toggle" id="langBtn" onclick="toggleLanguage()">EN</button>
 
-    <!-- SOLAPA FIJA LATERAL -->
+    <!-- SOLAPA LATERAL -->
     <div class="global-flap" id="globalFlap" onclick="toggleSites()">
         <span id="flapText">DIGITAL VÉRTIGO &gt;</span>
     </div>
@@ -658,7 +658,7 @@
                 </div>
             </details>
 
-            <!-- 4. INSTITUCIONES (CON LOGOS) -->
+            <!-- 4. INSTITUCIONES -->
             <details>
                 <summary id="dv-sum-inst">INSTITUCIONES</summary>
                 <div class="dropdown-content">
@@ -841,7 +841,7 @@
             }
 
             if (!animate) {
-                void container.offsetWidth; // Fuerza el reflow de CSS
+                void container.offsetWidth; 
                 setTimeout(() => {
                     container.classList.remove('no-transition');
                 }, 50);
@@ -886,7 +886,7 @@
             document.querySelectorAll('.lbl-orgs').forEach(el => el.textContent = t.lblOrgs);
         }
 
-        // Cierre automático de acordeones
+        // Cierre automático 
         const allDetails = document.querySelectorAll('details');
         allDetails.forEach((details) => {
             details.addEventListener('toggle', () => {
@@ -903,12 +903,12 @@
             });
         });
 
-        // Inicialización al cargar el DOM
+        // Inicialización de carga DOM
         window.addEventListener('DOMContentLoaded', () => {
             const hostname = window.location.hostname;
             const hash = window.location.hash;
             
-            // Iniciar video con garantía de fallback
+            // Iniciar video de fallback
             if (bgVideo) {
                 const playPromise = bgVideo.play();
                 if (playPromise !== undefined) {
@@ -920,7 +920,7 @@
                 }
             }
 
-            // Posicionamiento inmediato por dominio o hash (sin animación inicial)
+            // Posicionamiento  por dominio o hash 
             if (hostname.includes('digitalvertigo') || hash === '#digitalvertigo') {
                 setSide('dv', false);
             } else {
