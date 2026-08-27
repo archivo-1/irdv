@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title id="docTitle">Inteligencias Reflexivas</title>
+    
+    <!-- Script de ejecución síncrona para prevenir FOUC / parpadeo de color -->
+    <script>
+        (function() {
+            var h = window.location.hostname;
+            var hash = window.location.hash;
+            if (h.includes('digitalvertigo') || hash === '#digitalvertigo') {
+                document.documentElement.classList.add('dv-initial');
+            }
+        })();
+    </script>
+
     <style>
         :root {
             --accent-color: #00FF66;
             --accent-hover: #00CC55;
         }
 
-        body.dv-theme {
+        body.dv-theme, html.dv-initial {
             --accent-color: #00E5FF;
             --accent-hover: #00B8D4;
         }
@@ -120,6 +132,11 @@
             display: block;
             -webkit-overflow-scrolling: touch;
             background: transparent !important;
+        }
+
+        /* Oculta temporalmente la barra de scroll durante la animación horizontal */
+        .site-container.is-animating .page-pane {
+            overflow-y: hidden !important;
         }
 
         .page-pane::-webkit-scrollbar {
@@ -760,6 +777,7 @@
 
         let currentSide = 'ir';
         let currentLang = 'es';
+        let transitionTimeout = null;
 
         const pageTitles = {
             ir: "Inteligencias Reflexivas — Pabellón de Chile",
@@ -851,7 +869,6 @@
                 const details = iframe.closest('details');
                 const langBlock = iframe.closest('.lang-block');
                 
-                // Carga iFrame solo si su acordeón está abierto y su idioma es visible
                 if (details && details.open && langBlock && langBlock.style.display !== 'none') {
                     const dataSrc = iframe.getAttribute('data-src');
                     if (dataSrc && iframe.src !== dataSrc) {
@@ -864,18 +881,30 @@
         function setSide(side, animate = true) {
             const oldSide = currentSide;
             currentSide = side;
+
+            if (transitionTimeout) clearTimeout(transitionTimeout);
             
             if (!animate) {
                 container.classList.add('no-transition');
             } else {
                 container.classList.remove('no-transition');
+                container.classList.add('is-animating');
+                
+                transitionTimeout = setTimeout(() => {
+                    container.classList.remove('is-animating');
+                }, 700);
             }
+
+            // Resetear la posición del scroll vertical
+            const targetPane = document.getElementById(side === 'dv' ? 'dv-site' : 'ir-site');
+            if (targetPane) targetPane.scrollTop = 0;
 
             if (side === 'dv') {
                 container.style.transform = 'translateX(-50%)';
                 flapText.innerHTML = '&lt; INTELIGENCIAS REFLEXIVAS';
                 docTitle.textContent = pageTitles.dv;
                 document.body.classList.add('dv-theme');
+                document.documentElement.classList.remove('dv-initial');
                 switchVideo('assets/bgvideo2.mp4', 'assets/bgvideo.mp4');
                 window.location.hash = 'digitalvertigo';
             } else {
@@ -883,6 +912,7 @@
                 flapText.innerHTML = 'DIGITAL VÉRTIGO &gt;';
                 docTitle.textContent = pageTitles.ir;
                 document.body.classList.remove('dv-theme');
+                document.documentElement.classList.remove('dv-initial');
                 switchVideo('assets/bgvideo.mp4');
                 window.location.hash = 'inteligenciasreflexivas';
             }
@@ -890,10 +920,8 @@
             // Liberar memoria deshabilitando iFrames del sitio inactivo
             if (oldSide !== side) {
                 const inactivePane = document.getElementById(oldSide === 'dv' ? 'dv-site' : 'ir-site');
-                const activePane = document.getElementById(side === 'dv' ? 'dv-site' : 'ir-site');
-                
                 if (inactivePane) unloadIframesInPane(inactivePane);
-                if (activePane) reloadIframesInPane(activePane);
+                if (targetPane) reloadIframesInPane(targetPane);
             }
 
             if (!animate) {
@@ -941,7 +969,6 @@
             document.querySelectorAll('.lbl-contact').forEach(el => el.textContent = t.lblContact);
             document.querySelectorAll('.lbl-orgs').forEach(el => el.textContent = t.lblOrgs);
 
-            // Reevaluar iFrames visibles tras cambio de idioma
             const activePane = document.getElementById(currentSide === 'dv' ? 'dv-site' : 'ir-site');
             if (activePane) {
                 unloadIframesInPane(activePane);
@@ -949,7 +976,7 @@
             }
         }
 
-        // Listener para los acordeones details (Lazy Loading / Unloading de iFrames)
+        // Listener para los acordeones details
         const allDetails = document.querySelectorAll('details');
         allDetails.forEach((details) => {
             details.addEventListener('toggle', () => {
@@ -963,7 +990,6 @@
                         }
                     });
 
-                    // Cargar iFrames dentro de este acordeón que estén visibles
                     const visibleIframes = details.querySelectorAll('.lang-block:not([style*="display: none"]) iframe.iframe-container');
                     visibleIframes.forEach(iframe => {
                         const dataSrc = iframe.getAttribute('data-src');
@@ -972,7 +998,6 @@
                         }
                     });
                 } else {
-                    // Si se cierra el acordeón, liberar la memoria del iFrame
                     const iframes = details.querySelectorAll('iframe.iframe-container');
                     iframes.forEach(iframe => {
                         iframe.src = 'about:blank';
@@ -982,7 +1007,6 @@
         });
 
         window.addEventListener('DOMContentLoaded', () => {
-            // Resetear pestañas desplegables al recargar para evitar acumulación en memoria
             allDetails.forEach(details => details.removeAttribute('open'));
 
             const hostname = window.location.hostname;
