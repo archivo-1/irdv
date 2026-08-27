@@ -44,10 +44,19 @@
         }
 
         .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            opacity: 1;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .bg-video.fade-out {
+            opacity: 0;
         }
 
         .bg-overlay {
@@ -57,6 +66,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.45);
+            z-index: 1;
         }
 
         /* --- lang toggle --- */
@@ -456,7 +466,7 @@
 </head>
 <body>
 
-    <!-- BGVIDEO -->
+    <!-- BGVIDEO CON OVERLAY -->
     <div class="bg-video-container">
         <video class="bg-video" id="bgVideo" autoplay loop muted playsinline preload="auto">
             <source id="bgVideoSource" src="assets/bgvideo.mp4" type="video/mp4">
@@ -538,11 +548,11 @@
                 <div class="dropdown-content">
                     <div class="lang-block" data-lang="es">
                         <p>Registro fotográfico, audiovisual y clippings de medios internacionales y nacionales.</p>
-                        <iframe class="iframe-container" src="/galeria_a.html" title="Venice Gallery ES"></iframe>
+                        <iframe class="iframe-container" data-src="/galeria_a.html" src="about:blank" title="Venice Gallery ES"></iframe>
                     </div>
                     <div class="lang-block" data-lang="en" style="display: none;">
                         <p>Photographic, audiovisual registry, and press clippings from national and international media.</p>
-                        <iframe class="iframe-container" src="about:blank" title="Venice Gallery EN"></iframe>
+                        <iframe class="iframe-container" data-src="about:blank" src="about:blank" title="Venice Gallery EN"></iframe>
                     </div>
                 </div>
             </details>
@@ -552,11 +562,11 @@
                 <div class="dropdown-content">
                     <div class="lang-block" data-lang="es">
                         <p>Research archive, entrevistas, directorio y mapa interactivo de Data Centers.</p>
-                        <iframe class="iframe-container" src="https://drive.google.com/embeddedfolderview?id=1dR1I4xFqDxexwkQUS3WgWDJAL27xhtNQ#grid" title="Archivo Base de Datos ES"></iframe>
+                        <iframe class="iframe-container" data-src="https://drive.google.com/embeddedfolderview?id=1dR1I4xFqDxexwkQUS3WgWDJAL27xhtNQ#grid" src="about:blank" title="Archivo Base de Datos ES"></iframe>
                     </div>
                     <div class="lang-block" data-lang="en" style="display: none;">
                         <p>Research archive, interviews, directory, and interactive Data Center map.</p>
-                        <iframe class="iframe-container" src="https://drive.google.com/embeddedfolderview?id=1dR1I4xFqDxexwkQUS3WgWDJAL27xhtNQ#grid" title="Archivo Base de Datos EN"></iframe>
+                        <iframe class="iframe-container" data-src="https://drive.google.com/embeddedfolderview?id=1dR1I4xFqDxexwkQUS3WgWDJAL27xhtNQ#grid" src="about:blank" title="Archivo Base de Datos EN"></iframe>
                     </div>
                 </div>
             </details>
@@ -696,11 +706,11 @@
                 <div class="dropdown-content">
                     <div class="lang-block" data-lang="es">
                         <p>Bloques: Sesiones cerradas, seminarios, visitas guiadas y charlas públicas.</p>
-                        <iframe class="iframe-container" src="about:blank" title="Programa Google Sheets ES"></iframe>
+                        <iframe class="iframe-container" data-src="about:blank" src="about:blank" title="Programa Google Sheets ES"></iframe>
                     </div>
                     <div class="lang-block" data-lang="en" style="display: none;">
                         <p>Sessions: Closed workshops, seminars, guided tours, and public talks.</p>
-                        <iframe class="iframe-container" src="about:blank" title="Programa Google Sheets EN"></iframe>
+                        <iframe class="iframe-container" data-src="about:blank" src="about:blank" title="Programa Google Sheets EN"></iframe>
                     </div>
                 </div>
             </details>
@@ -710,11 +720,11 @@
                 <div class="dropdown-content">
                     <div class="lang-block" data-lang="es">
                         <p>Fotos de los encuentros en Santiago y las visitas a los archivos en las instituciones.</p>
-                        <iframe class="iframe-container" src="about:blank" title="Gallery Digital Vertigo ES"></iframe>
+                        <iframe class="iframe-container" data-src="about:blank" src="about:blank" title="Gallery Digital Vertigo ES"></iframe>
                     </div>
                     <div class="lang-block" data-lang="en" style="display: none;">
                         <p>Photos of gatherings in Santiago and institutional archive visits.</p>
-                        <iframe class="iframe-container" src="about:blank" title="Gallery Digital Vertigo EN"></iframe>
+                        <iframe class="iframe-container" data-src="about:blank" src="about:blank" title="Gallery Digital Vertigo EN"></iframe>
                     </div>
                 </div>
             </details>
@@ -791,32 +801,68 @@
             }
         };
 
+        // Transición suave de vídeo mediante Fade Out/In
         function switchVideo(targetSrc, fallbackSrc) {
             if (!bgVideo) return;
 
             const currentSrc = bgVideo.currentSrc || bgVideo.querySelector('source')?.src || '';
             if (currentSrc.includes(targetSrc)) return;
 
-            const handleVideoError = () => {
-                if (fallbackSrc) {
-                    bgVideo.onerror = null;
-                    bgVideo.src = fallbackSrc;
-                    bgVideo.load();
-                    bgVideo.play().catch(() => {});
+            bgVideo.classList.add('fade-out');
+
+            setTimeout(() => {
+                const handleVideoError = () => {
+                    if (fallbackSrc) {
+                        bgVideo.onerror = null;
+                        bgVideo.src = fallbackSrc;
+                        bgVideo.load();
+                        bgVideo.play().catch(() => {});
+                    }
+                };
+
+                bgVideo.onerror = handleVideoError;
+                bgVideo.src = targetSrc;
+                bgVideo.load();
+
+                const playPromise = bgVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        bgVideo.classList.remove('fade-out');
+                    }).catch(() => {
+                        bgVideo.classList.remove('fade-out');
+                    });
+                } else {
+                    bgVideo.classList.remove('fade-out');
                 }
-            };
+            }, 300);
+        }
 
-            bgVideo.onerror = handleVideoError;
-            bgVideo.src = targetSrc;
-            bgVideo.load();
+        // Manejo y liberación de iFrames
+        function unloadIframesInPane(paneElement) {
+            const iframes = paneElement.querySelectorAll('iframe.iframe-container');
+            iframes.forEach(iframe => {
+                iframe.src = 'about:blank';
+            });
+        }
 
-            const playPromise = bgVideo.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(() => {});
-            }
+        function reloadIframesInPane(paneElement) {
+            const iframes = paneElement.querySelectorAll('iframe.iframe-container');
+            iframes.forEach(iframe => {
+                const details = iframe.closest('details');
+                const langBlock = iframe.closest('.lang-block');
+                
+                // Carga iFrame solo si su acordeón está abierto y su idioma es visible
+                if (details && details.open && langBlock && langBlock.style.display !== 'none') {
+                    const dataSrc = iframe.getAttribute('data-src');
+                    if (dataSrc && iframe.src !== dataSrc) {
+                        iframe.src = dataSrc;
+                    }
+                }
+            });
         }
 
         function setSide(side, animate = true) {
+            const oldSide = currentSide;
             currentSide = side;
             
             if (!animate) {
@@ -829,16 +875,25 @@
                 container.style.transform = 'translateX(-50%)';
                 flapText.innerHTML = '&lt; INTELIGENCIAS REFLEXIVAS';
                 docTitle.textContent = pageTitles.dv;
-                document.body.classList.add('dv-theme'); // Cambia variables CSS a celeste
+                document.body.classList.add('dv-theme');
                 switchVideo('assets/bgvideo2.mp4', 'assets/bgvideo.mp4');
                 window.location.hash = 'digitalvertigo';
             } else {
                 container.style.transform = 'translateX(0)';
                 flapText.innerHTML = 'DIGITAL VÉRTIGO &gt;';
                 docTitle.textContent = pageTitles.ir;
-                document.body.classList.remove('dv-theme'); // Restaura variables CSS a verde
+                document.body.classList.remove('dv-theme');
                 switchVideo('assets/bgvideo.mp4');
                 window.location.hash = 'inteligenciasreflexivas';
+            }
+
+            // Liberar memoria deshabilitando iFrames del sitio inactivo
+            if (oldSide !== side) {
+                const inactivePane = document.getElementById(oldSide === 'dv' ? 'dv-site' : 'ir-site');
+                const activePane = document.getElementById(side === 'dv' ? 'dv-site' : 'ir-site');
+                
+                if (inactivePane) unloadIframesInPane(inactivePane);
+                if (activePane) reloadIframesInPane(activePane);
             }
 
             if (!animate) {
@@ -885,8 +940,16 @@
 
             document.querySelectorAll('.lbl-contact').forEach(el => el.textContent = t.lblContact);
             document.querySelectorAll('.lbl-orgs').forEach(el => el.textContent = t.lblOrgs);
+
+            // Reevaluar iFrames visibles tras cambio de idioma
+            const activePane = document.getElementById(currentSide === 'dv' ? 'dv-site' : 'ir-site');
+            if (activePane) {
+                unloadIframesInPane(activePane);
+                reloadIframesInPane(activePane);
+            }
         }
 
+        // Listener para los acordeones details (Lazy Loading / Unloading de iFrames)
         const allDetails = document.querySelectorAll('details');
         allDetails.forEach((details) => {
             details.addEventListener('toggle', () => {
@@ -899,11 +962,29 @@
                             item.removeAttribute('open');
                         }
                     });
+
+                    // Cargar iFrames dentro de este acordeón que estén visibles
+                    const visibleIframes = details.querySelectorAll('.lang-block:not([style*="display: none"]) iframe.iframe-container');
+                    visibleIframes.forEach(iframe => {
+                        const dataSrc = iframe.getAttribute('data-src');
+                        if (dataSrc && iframe.src !== dataSrc) {
+                            iframe.src = dataSrc;
+                        }
+                    });
+                } else {
+                    // Si se cierra el acordeón, liberar la memoria del iFrame
+                    const iframes = details.querySelectorAll('iframe.iframe-container');
+                    iframes.forEach(iframe => {
+                        iframe.src = 'about:blank';
+                    });
                 }
             });
         });
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Resetear pestañas desplegables al recargar para evitar acumulación en memoria
+            allDetails.forEach(details => details.removeAttribute('open'));
+
             const hostname = window.location.hostname;
             const hash = window.location.hash;
 
