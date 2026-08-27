@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title id="docTitle">Inteligencias Reflexivas</title>
     <style>
+        :root {
+            --accent-color: #00FF66;
+            --accent-hover: #00CC55;
+        }
+
+        body.dv-theme {
+            --accent-color: #00E5FF;
+            --accent-hover: #00B8D4;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -86,7 +96,6 @@
             background: transparent;
         }
 
-        /* deshabilita animación en la carga inicial */
         .no-transition {
             transition: none !important;
         }
@@ -114,7 +123,7 @@
             border-radius: 4px;
         }
         .page-pane::-webkit-scrollbar-thumb:hover {
-            background: #00FF66;
+            background: var(--accent-color);
         }
 
         #ir-site, #dv-site {
@@ -154,7 +163,7 @@
         }
 
         details:hover {
-            border-bottom-color: #00FF66;
+            border-bottom-color: var(--accent-color);
         }
 
         summary {
@@ -173,7 +182,7 @@
         }
 
         summary:hover {
-            color: #00FF66;
+            color: var(--accent-color);
         }
 
         summary::-webkit-details-marker {
@@ -183,8 +192,8 @@
         summary::after {
             content: '▾';
             font-size: 1.4rem;
-            color: #00FF66;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--accent-color);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
         }
 
         details[open] summary::after {
@@ -239,7 +248,6 @@
             border-radius: 4px;
         }
 
-        /* --- GRILLA PARA LOGOS INSTITUCIONALES --- */
         .inst-block {
             margin-bottom: 2.5rem;
         }
@@ -345,7 +353,7 @@
             width: 60px;
             height: 100vh;
             height: 100dvh;
-            background-color: #00FF66;
+            background-color: var(--accent-color);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -371,7 +379,7 @@
 
         .global-flap:hover {
             width: 70px;
-            background-color: #00CC55;
+            background-color: var(--accent-hover);
         }
 
         @media (max-width: 768px) {
@@ -388,7 +396,6 @@
 
             .global-flap {
                 width: 42px !important;
-                background-color: #00FF66;
             }
 
             .global-flap:hover {
@@ -452,7 +459,7 @@
     <!-- BGVIDEO -->
     <div class="bg-video-container">
         <video class="bg-video" id="bgVideo" autoplay loop muted playsinline preload="auto">
-            <source src="assets/bgvideo.mp4" type="video/mp4">
+            <source id="bgVideoSource" src="assets/bgvideo.mp4" type="video/mp4">
         </video>
         <div class="bg-overlay"></div>
     </div>
@@ -473,17 +480,14 @@
             <img src="thumbnails/inteligencias-reflexivas.png" alt="INTELIGENCIAS REFLEXIVAS" class="title-logo-img">
             <div class="subtitle" id="ir-subtitle">Pabellón de Chile · 19° Bienal de Arquitectura de Venecia 2025</div>
 
-            <!-- 1. ABOUT -->
             <details>
                 <summary id="ir-sum-about">ACERCA DE</summary>
                 <div class="dropdown-content">
                     <div class="grid-content">
                         <div class="text-block">
-                            <!-- ES -->
                             <div class="lang-block" data-lang="es">
                                 <p>Inteligencias Reflexivas es la propuesta curatorial que representa al Pabellón de Chile en la 19° Bienal de Arquitectura de Venecia 2025. En respuesta al llamado internacional “Intelligens. Natural. Artificial. Collective., el proyecto propone un desplazamiento crítico: interrogar el imaginario tecno-optimista y abstracto de la Inteligencia Artificial para situar la mirada en sus condiciones materiales, sus impactos ecológicos y sus urgentes implicancias políticas.</p>
                             </div>
-                            <!-- EN -->
                             <div class="lang-block" data-lang="en" style="display: none;">
                                 <p>Reflective Intelligences is the curatorial proposal representing the Chilean Pavilion at the 19th International Architecture Exhibition – La Biennale di Venezia 2025. Responding to the theme "Intelligens. Natural. Artificial. Collective.", the project proposes a critical shift: questioning the techno-optimistic and abstract imaginary of Artificial Intelligence to focus on its material conditions, ecological impacts, and urgent political implications.</p>
                             </div>
@@ -493,12 +497,10 @@
                 </div>
             </details>
             
-            <!-- 2. TEAM -->
             <details>
                 <summary id="ir-sum-team">EQUIPO</summary>
                 <div class="dropdown-content">
                     <div class="text-block">
-                        <!-- ES -->
                         <div class="lang-block" data-lang="es">
                             <p><strong>Curaduría</strong><br>Serena Dambrosio, Nicolás Díaz Bejarano, Linda Schilling Cuellar</p>
                             <p><strong>Comisario</strong><br>Cristobal Molina Baeza</p>
@@ -513,7 +515,6 @@
                             <p><strong>Impresión 3D: LAT</strong><br>Laboratorio Arte y Tecnología, Escuela de Arte, Facultad de Artes UC Chile; Laboratorio de Fabricación Digital Fabhaus, Facultad de Arquitectura, Diseño y Estudios Urbanos UC Chile; Escuela de Arquitectura, Universidad Andrés Bello; Facultad de Arquitectura e Ingeniería, Universidad Central; Facultad de Arquitectura, Arte y Diseño, Universidad Diego Portales; Escuela de Arquitectura, Universidad de Las Américas</p>
                             <p><strong>Organiza:</strong><br>Ministerio de las Culturas, las Artes y el Patrimonio de Chile, con el apoyo de la Dirección de Asuntos Culturales (DIRAC) del Ministerio de Relaciones Exteriores de Chile y la Embajada de Chile en Italia</p>
                         </div>
-                        <!-- EN -->
                         <div class="lang-block" data-lang="en" style="display: none;">
                             <p><strong>Curators:</strong><br>Serena Dambrosio, Nicolás Díaz Bejarano, Linda Schilling Cuellar</p>
                             <p><strong>Commissioner:</strong><br>Cristobal Molina Baeza</p>
@@ -532,16 +533,13 @@
                 </div>
             </details>
 
-            <!-- 3. VENICE 2025 -->
             <details>
                 <summary id="ir-sum-venice">VENICE 2025</summary>
                 <div class="dropdown-content">
-                    <!-- ES -->
                     <div class="lang-block" data-lang="es">
                         <p>Registro fotográfico, audiovisual y clippings de medios internacionales y nacionales.</p>
                         <iframe class="iframe-container" src="/galeria_a.html" title="Venice Gallery ES"></iframe>
                     </div>
-                    <!-- EN -->
                     <div class="lang-block" data-lang="en" style="display: none;">
                         <p>Photographic, audiovisual registry, and press clippings from national and international media.</p>
                         <iframe class="iframe-container" src="about:blank" title="Venice Gallery EN"></iframe>
@@ -549,16 +547,13 @@
                 </div>
             </details>
 
-            <!-- 4. ARCHIVO -->
             <details>
                 <summary id="ir-sum-archive">ARCHIVO</summary>
                 <div class="dropdown-content">
-                    <!-- ES -->
                     <div class="lang-block" data-lang="es">
                         <p>Research archive, entrevistas, directorio y mapa interactivo de Data Centers.</p>
                         <iframe class="iframe-container" src="https://drive.google.com/embeddedfolderview?id=1dR1I4xFqDxexwkQUS3WgWDJAL27xhtNQ#grid" title="Archivo Base de Datos ES"></iframe>
                     </div>
-                    <!-- EN -->
                     <div class="lang-block" data-lang="en" style="display: none;">
                         <p>Research archive, interviews, directory, and interactive Data Center map.</p>
                         <iframe class="iframe-container" src="https://drive.google.com/embeddedfolderview?id=1dR1I4xFqDxexwkQUS3WgWDJAL27xhtNQ#grid" title="Archivo Base de Datos EN"></iframe>
@@ -566,7 +561,6 @@
                 </div>
             </details>
 
-            <!-- FOOTER -->
             <footer class="site-footer">
                 <div class="footer-row">
                     <span class="footer-label lbl-contact">Contacto & RRSS</span>
@@ -592,18 +586,15 @@
             <img src="thumbnails/digital-vertigo.png" alt="DIGITAL VÉRTIGO" class="title-logo-img">
             <div class="subtitle" id="dv-subtitle">Encuentro académico público en Chile</div>
 
-            <!-- 1. ABOUT DIGITAL VERTIGO -->
             <details>
                 <summary id="dv-sum-about">ACERCA DE</summary>
                 <div class="dropdown-content">
                     <div class="grid-content">
                         <div class="text-block">
-                            <!-- ES -->
                             <div class="lang-block" data-lang="es">
                                 <p>Digital Vértigo es un encuentro internacional e interdisciplinar que reúne a arquitectos, diseñadores, investigadores y teóricos de los estudios de medios para reflexionar críticamente sobre las arquitecturas de la información.</p>
                                 <p>El proyecto funciona como una plataforma pública para interrogar la relación entre las infraestructuras de almacenamiento y los procesos de digitalización del conocimiento, utilizándolos desde una lente strictly material, espacial y ecológica.</p>
                             </div>
-                            <!-- EN -->
                             <div class="lang-block" data-lang="en" style="display: none;">
                                 <p>Digital Vertigo is an international and interdisciplinary symposium bringing together architects, designers, researchers, and media theorists to critically reflect on information architectures.</p>
                                 <p>The project acts as a public platform to interrogate the connection between storage infrastructures and knowledge digitization processes through a strictly material, spatial, and ecological lens.</p>
@@ -614,12 +605,10 @@
                 </div>
             </details>
 
-            <!-- 2. TEAM -->
             <details>
                 <summary id="dv-sum-team">EQUIPO</summary>
                 <div class="dropdown-content">
                     <div class="text-block">
-                        <!-- ES -->
                         <div class="lang-block" data-lang="es">
                             <p><strong>Curaduría</strong><br>Serena Dambrosio, Nicolás Díaz Bejarano, Linda Schilling Cuellar</p>
                             <p><strong>Asistentes</strong><br>Álvaro Andueza, Fabiana Calderón, Tomás Carbonell, Nathan Humanante, Luna Valdivia</p>
@@ -627,7 +616,6 @@
                             <p><strong>Adaptación Identidad Visual Digital Vertigo:</strong><br>Antonieta López</p>
                             <p><strong>Responsable de prensa</strong><br>Constanza Almarza</p>
                         </div>
-                        <!-- EN -->
                         <div class="lang-block" data-lang="en" style="display: none;">
                             <p><strong>Curators:</strong><br>Serena Dambrosio, Nicolás Díaz Bejarano, Linda Schilling Cuellar</p>
                             <p><strong>Assistants:</strong><br>Álvaro Andueza, Fabiana Calderón, Tomás Carbonell, Nathan Humanante, Luna Valdivia</p>
@@ -639,17 +627,14 @@
                 </div>
             </details>
 
-            <!-- 3. INVITADOS -->
             <details>
                 <summary id="dv-sum-guests">INVITADOS</summary>
                 <div class="dropdown-content">
                     <div class="text-block">
-                        <!-- ES -->
                         <div class="lang-block" data-lang="es">
                             <p><strong>Charlas</strong><br>Marina Otero Verzier, Susan Schuppli, Felicity Scott, Cécile Diguet, Mario Santamaría, Cheng-Luen Hsueh, David Capener, Laura Kurgan</p>
                             <p><strong>Mesas de trabajo:</strong><br>Matías Bernales, Sebastián Leyton, Francisco Irarrázaval, Félix Rojas, Ignacio Tapia Muñoz, Paz Peña, Rodrigo Vallejos, Dante Orellana, David Jofré Leiva, Francisca Skoknic, Vicente Bardales, Tania Rodríguez, Red Nube Justa, Karina Fernández, Natalia López, Ignacio Silva, Magdalena Calcagni, Cécile Diguet, Bianca Chong, Centro de Inteligencia Territorial, Sebastián Salas, Andrés Contreras, Sebastián Díaz Howard, Alexandra Arancibia</p>
                         </div>
-                        <!-- EN -->
                         <div class="lang-block" data-lang="en" style="display: none;">
                             <p><strong>Keynote Speakers:</strong><br>Marina Otero Verzier, Susan Schuppli, Felicity Scott, Cécile Diguet, Mario Santamaría, Cheng-Luen Hsueh, David Capener, Laura Kurgan</p>
                             <p><strong>Workshops & Roundtable Participants:</strong><br>Matías Bernales, Sebastián Leyton, Francisco Irarrázaval, Félix Rojas, Ignacio Tapia Muñoz, Paz Peña, Rodrigo Vallejos, Dante Orellana, David Jofré Leiva, Francisca Skoknic, Vicente Bardales, Tania Rodríguez, Red Nube Justa, Karina Fernández, Natalia López, Ignacio Silva, Magdalena Calcagni, Cécile Diguet, Bianca Chong, Centro de Inteligencia Territorial, Sebastián Salas, Andrés Contreras, Sebastián Díaz Howard, Alexandra Arancibia</p>
@@ -658,12 +643,10 @@
                 </div>
             </details>
 
-            <!-- 4. INSTITUCIONES -->
             <details>
                 <summary id="dv-sum-inst">INSTITUCIONES</summary>
                 <div class="dropdown-content">
                     <div class="text-block">
-                        <!-- ES -->
                         <div class="lang-block" data-lang="es">
                             <div class="inst-block">
                                 <p class="inst-subtitle"><strong>Auspician</strong></p>
@@ -686,7 +669,6 @@
                             </div>
                         </div>
 
-                        <!-- EN -->
                         <div class="lang-block" data-lang="en" style="display: none;">
                             <div class="inst-block">
                                 <p class="inst-subtitle"><strong>Sponsors:</strong></p>
@@ -700,11 +682,8 @@
                                 <p class="inst-subtitle"><strong>Supported by:</strong></p>
                                 <p>ANID Postdoctoral Fondecyt 2025, Folio 3250115<br>Faculty of Architecture, Art and Design, Universidad Diego Portales<br>Nicanor Parra Library, Universidad Diego Portales<br>National Library of Chile<br>Palacio Pereira</p>
                                 <div class="inst-logo-grid">
-                                    <img src="assets/MINCIENCIA + ANID.svg" alt="MinCiencia + ANID" class="inst-logo-item">
-                                    <img src="assets/UDP.png" alt="Universidad Diego Portales" class="inst-logo-item">
-                                    <img src="assets/bibliotecaudp.png" alt="Biblioteca Nicanor Parra UDP" class="inst-logo-item">
-                                    <img src="assets/Biobliotca Nacional de Chile.png" alt="National Library of Chile" class="inst-logo-item">
-                                    <img src="assets/PalacioPereira.svg" alt="Palacio Pereira" class="inst-logo-item">
+                                    <img src="assets/MINCIENCIA + ANID.svg" alt="Ministry of Cultures, Arts and Heritage" class="inst-logo-item">
+                                    <img src="assets/Pulitzer Center.svg" alt="Pulitzer Center" class="inst-logo-item">
                                 </div>
                             </div>
                         </div>
@@ -712,16 +691,13 @@
                 </div>
             </details>
             
-            <!-- 5. PROGRAMA -->
             <details>
                 <summary id="dv-sum-prog">PROGRAMA (CALENDARIO DINÁMICO)</summary>
                 <div class="dropdown-content">
-                    <!-- ES -->
                     <div class="lang-block" data-lang="es">
                         <p>Bloques: Sesiones cerradas, seminarios, visitas guiadas y charlas públicas.</p>
                         <iframe class="iframe-container" src="about:blank" title="Programa Google Sheets ES"></iframe>
                     </div>
-                    <!-- EN -->
                     <div class="lang-block" data-lang="en" style="display: none;">
                         <p>Sessions: Closed workshops, seminars, guided tours, and public talks.</p>
                         <iframe class="iframe-container" src="about:blank" title="Programa Google Sheets EN"></iframe>
@@ -729,16 +705,13 @@
                 </div>
             </details>
 
-            <!-- 6. GALERÍA -->
             <details>
                 <summary id="dv-sum-gallery">GALERÍA</summary>
                 <div class="dropdown-content">
-                    <!-- ES -->
                     <div class="lang-block" data-lang="es">
                         <p>Fotos de los encuentros en Santiago y las visitas a los archivos en las instituciones.</p>
                         <iframe class="iframe-container" src="about:blank" title="Gallery Digital Vertigo ES"></iframe>
                     </div>
-                    <!-- EN -->
                     <div class="lang-block" data-lang="en" style="display: none;">
                         <p>Photos of gatherings in Santiago and institutional archive visits.</p>
                         <iframe class="iframe-container" src="about:blank" title="Gallery Digital Vertigo EN"></iframe>
@@ -746,7 +719,6 @@
                 </div>
             </details>
 
-            <!-- FOOTER -->
             <footer class="site-footer">
                 <div class="footer-row">
                     <span class="footer-label lbl-contact">Contacto & RRSS</span>
@@ -819,6 +791,31 @@
             }
         };
 
+        function switchVideo(targetSrc, fallbackSrc) {
+            if (!bgVideo) return;
+
+            const currentSrc = bgVideo.currentSrc || bgVideo.querySelector('source')?.src || '';
+            if (currentSrc.includes(targetSrc)) return;
+
+            const handleVideoError = () => {
+                if (fallbackSrc) {
+                    bgVideo.onerror = null;
+                    bgVideo.src = fallbackSrc;
+                    bgVideo.load();
+                    bgVideo.play().catch(() => {});
+                }
+            };
+
+            bgVideo.onerror = handleVideoError;
+            bgVideo.src = targetSrc;
+            bgVideo.load();
+
+            const playPromise = bgVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {});
+            }
+        }
+
         function setSide(side, animate = true) {
             currentSide = side;
             
@@ -832,11 +829,15 @@
                 container.style.transform = 'translateX(-50%)';
                 flapText.innerHTML = '&lt; INTELIGENCIAS REFLEXIVAS';
                 docTitle.textContent = pageTitles.dv;
+                document.body.classList.add('dv-theme'); // Cambia variables CSS a celeste
+                switchVideo('assets/bgvideo2.mp4', 'assets/bgvideo.mp4');
                 window.location.hash = 'digitalvertigo';
             } else {
                 container.style.transform = 'translateX(0)';
                 flapText.innerHTML = 'DIGITAL VÉRTIGO &gt;';
                 docTitle.textContent = pageTitles.ir;
+                document.body.classList.remove('dv-theme'); // Restaura variables CSS a verde
+                switchVideo('assets/bgvideo.mp4');
                 window.location.hash = 'inteligenciasreflexivas';
             }
 
@@ -886,7 +887,6 @@
             document.querySelectorAll('.lbl-orgs').forEach(el => el.textContent = t.lblOrgs);
         }
 
-        // Cierre automático 
         const allDetails = document.querySelectorAll('details');
         allDetails.forEach((details) => {
             details.addEventListener('toggle', () => {
@@ -903,24 +903,10 @@
             });
         });
 
-        // Inicialización de carga DOM
         window.addEventListener('DOMContentLoaded', () => {
             const hostname = window.location.hostname;
             const hash = window.location.hash;
-            
-            // Iniciar video de fallback
-            if (bgVideo) {
-                const playPromise = bgVideo.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(() => {
-                        document.body.addEventListener('click', () => {
-                            bgVideo.play();
-                        }, { once: true });
-                    });
-                }
-            }
 
-            // Posicionamiento  por dominio o hash 
             if (hostname.includes('digitalvertigo') || hash === '#digitalvertigo') {
                 setSide('dv', false);
             } else {
