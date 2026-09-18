@@ -40,81 +40,99 @@
   </div>
 
   <script>
-    // 1. Leer parámetros URL: ?folder=galeria_a&files=1.jpg,2.mp4,3.jpg
-    const urlParams = new URLSearchParams(window.location.search);
-    const folder = urlParams.get('folder') || 'galeria_a';
-    const filesParam = urlParams.get('files');
+    // Leer parámetros URL
+const urlParams = new URLSearchParams(window.location.search);
+const folder = urlParams.get('folder') || 'galeria_a';
+const total = parseInt(urlParams.get('total')) || 0;
+const filesParam = urlParams.get('files');
 
-    let images = [];
+let images = [];
 
-    if (filesParam) {
-      // Si especificamos la lista de archivos explícitamente en la URL
-      images = filesParam.split(',').map(f => `${folder}/${f.trim()}`);
+if (filesParam) {
+  // Para cuando quieras especificar una lista corta manual
+  images = filesParam.split(',').map(f => `${folder}/${f.trim()}`);
+} else if (total > 0) {
+  // Genera rutas base para cada número (ej: galeria_c/1, galeria_c/2...)
+  for (let i = 1; i <= total; i++) {
+    images.push(`${folder}/${i}`);
+  }
+}
+
+function isVideo(path) {
+  const lower = path.toLowerCase();
+  return lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.mov');
+}
+
+// Función auxiliar para cargar imagen o probar video automáticamente
+function createMediaElement(basePath, isThumb = false) {
+  // Si la ruta ya tiene extensión (por usar filesParam)
+  if (basePath.includes('.')) {
+    if (isVideo(basePath)) {
+      const vid = document.createElement('video');
+      vid.src = basePath;
+      if (isThumb) { vid.muted = true; vid.preload = 'metadata'; }
+      else { vid.controls = true; }
+      return vid;
     } else {
-      // Si no hay lista explícita, genera una secuencia por defecto de JPGs (ej: 22 fotos)
-      const total = parseInt(urlParams.get('total')) || 22;
-      for (let i = 1; i <= total; i++) {
-        images.push(`${folder}/${i}.jpg`);
-      }
+      const img = document.createElement('img');
+      img.src = basePath;
+      return img;
     }
-
-    let currentIndex = 0;
-    const mediaWrapper = document.getElementById('mediaWrapper');
-    const thumbnailList = document.getElementById('thumbnailList');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const imageCounter = document.getElementById('imageCounter');
-
-    function isVideo(path) {
-      return path.endsWith('.mp4') || path.endsWith('.webm') || path.endsWith('.mov');
-    }
-
-    function updateGallery() {
-  const currentSrc = images[currentIndex];
-  mediaWrapper.innerHTML = '';
-
-  // Cargar Imagen o Video en el visor principal
-  if (isVideo(currentSrc)) {
-    const video = document.createElement('video');
-    video.src = currentSrc;
-    
-    // --- CONTROLES DE AUDIO Y REPRODUCCIÓN ---
-    video.controls = true;      // Muestra barra de reproducción, volumen y pantalla completa
-    video.autoplay = false;     // NO reproduce automáticamente
-    video.loop = false;         // Se detiene al terminar
-    video.muted = false;        // Audio habilitado por defecto
-    video.preload = 'metadata'; // Carga previa eficiente
-    
-    video.style.maxHeight = '80vh';
-    video.style.maxWidth = '100%';
-    mediaWrapper.appendChild(video);
-  } else {
-    const img = document.createElement('img');
-    img.src = currentSrc;
-    img.alt = `Archivo ${currentIndex + 1}`;
-    mediaWrapper.appendChild(img);
   }
 
-  // Actualizar contador
+  // Si no tiene extensión, creamos un elemento dinámico
+  if (isThumb) {
+    const img = document.createElement('img');
+    img.src = `${basePath}.JPG`;
+    // Si la imagen falla en la miniatura, prueba la versión en minúsculas o mp4
+    img.onerror = () => {
+      img.onerror = () => {
+        const vid = document.createElement('video');
+        vid.src = `${basePath}.mp4`;
+        vid.muted = true;
+        vid.className = 'thumb-item';
+        img.replaceWith(vid);
+      };
+      img.src = `${basePath}.jpg`;
+    };
+    return img;
+  } else {
+    // Para el visor principal
+    const img = document.createElement('img');
+    img.src = `${basePath}.JPG`;
+    img.onerror = () => {
+      img.onerror = () => {
+        // Si no fue JPG ni jpg, intenta renderizar como video MP4
+        const vid = document.createElement('video');
+        vid.src = `${basePath}.mp4`;
+        vid.controls = true;
+        vid.style.maxHeight = '80vh';
+        vid.style.maxWidth = '100%';
+        img.replaceWith(vid);
+      };
+      img.src = `${basePath}.jpg`;
+    };
+    return img;
+  }
+}
+
+function updateGallery() {
+  const currentPath = images[currentIndex];
+  mediaWrapper.innerHTML = '';
+
+  const element = createMediaElement(currentPath, false);
+  mediaWrapper.appendChild(element);
+
   imageCounter.textContent = `${currentIndex + 1} / ${images.length}`;
 
-  // Actualizar miniaturas activas
   const thumbs = thumbnailList.querySelectorAll('.thumb-item');
   thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
 }
 
-// Generar Miniaturas en la barra lateral
-images.forEach((src, index) => {
-  let thumb;
-  if (isVideo(src)) {
-    thumb = document.createElement('video');
-    thumb.src = src;
-    thumb.muted = true;         // Silenciado en la vista previa lateral
-    thumb.preload = 'metadata';
-  } else {
-    thumb = document.createElement('img');
-    thumb.src = src;
-  }
+// Generar Miniaturas
+thumbnailList.innerHTML = '';
+images.forEach((path, index) => {
+  const thumb = createMediaElement(path, true);
   thumb.className = 'thumb-item';
   thumb.addEventListener('click', () => {
     currentIndex = index;
@@ -123,18 +141,8 @@ images.forEach((src, index) => {
   thumbnailList.appendChild(thumb);
 });
 
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      updateGallery();
-    });
-
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % images.length;
-      updateGallery();
-    });
-
-    // Iniciar
-    if (images.length > 0) updateGallery();
+// Carga inicial
+if (images.length > 0) updateGallery();
   </script>
 </body>
 </html>
