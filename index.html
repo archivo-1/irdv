@@ -198,6 +198,7 @@
             margin-bottom: 1rem;
             border-radius: 0;
             transition: border-color 0.3s ease;
+            scroll-margin-top: 60px;
         }
 
         details:hover {
@@ -299,13 +300,17 @@
 
         /* --- Charlas --- */
         .speakers-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 1.5rem;
-        margin-top: 1.5rem;
-        justify-content: center;
-        justify-items: center;
-        }
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra todos los elementos, incluidos los huérfanos de la última fila */
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.speaker-card {
+    width: 180px; /* Ancho fijo para cada tarjeta */
+    /* o puedes usar: flex: 0 1 180px; */
+}
 
         .speaker-card {
             background: rgba(255, 255, 255, 0.03);
@@ -852,15 +857,15 @@
                 <summary id="dv-sum-prog">PROGRAMA</summary>
                 <div class="dropdown-content">
                     <div class="lang-block" data-lang="es">
-                        <p>Cronograma Octubre 2026.</p>
+                        <p>Cronograma - Octubre 2026.</p>
                         <div style="margin-top: 1rem;">
                             <img src="thumbnails/programa-calendario-es.png" alt="Programa Calendario" style="max-width: 100%; height: auto; display: block;" onerror="this.style.display='none'; this.parentNode.innerText='[ Imagen de Calendario / Programa ES ]';">
                         </div>
                     </div>
                     <div class="lang-block" data-lang="en" style="display: none;">
-                        <p>Program October 2026.</p>
+                        <p>Schedule - October 2026.</p>
                         <div style="margin-top: 1rem;">
-                            <img src="thumbnails/programa-calendario-en.png" alt="Program Calendar" style="max-width: 100%; height: auto; display: block;" onerror="this.style.display='none'; this.parentNode.innerText='[ Calendar / Program Image EN ]';">
+                            <img src="thumbnails/programa-calendario-es.png" alt="Program Calendar" style="max-width: 100%; height: auto; display: block;" onerror="this.style.display='none'; this.parentNode.innerText='[ Calendar / Program Image EN ]';">
                         </div>
                     </div>
                 </div>
@@ -1189,33 +1194,42 @@
         }
 
         const allDetails = document.querySelectorAll('details');
-        allDetails.forEach((details) => {
-            details.addEventListener('toggle', () => {
-                if (details.open) {
-                    const currentPane = details.closest('.page-pane');
-                    const siblingDetails = currentPane.querySelectorAll('details');
-                    
-                    siblingDetails.forEach((item) => {
-                        if (item !== details) {
-                            item.removeAttribute('open');
-                        }
-                    });
+allDetails.forEach((details) => {
+  details.addEventListener('toggle', () => {
+    if (details.open) {
+      const currentPane = details.closest('.page-pane');
+      const siblingDetails = currentPane.querySelectorAll('details');
+      siblingDetails.forEach((item) => {
+        if (item !== details) {
+          item.removeAttribute('open');
+        }
+      });
 
-                    const visibleIframes = details.querySelectorAll('iframe.iframe-container');
-                    visibleIframes.forEach(iframe => {
-                        const dataSrc = iframe.getAttribute('data-src');
-                        if (dataSrc && iframe.src !== dataSrc) {
-                            iframe.src = dataSrc;
-                        }
-                    });
-                } else {
-                    const iframes = details.querySelectorAll('iframe.iframe-container');
-                    iframes.forEach(iframe => {
-                        iframe.src = 'about:blank';
-                    });
-                }
-            });
+      const visibleIframes = details.querySelectorAll('iframe.iframe-container');
+      visibleIframes.forEach(iframe => {
+        const dataSrc = iframe.getAttribute('data-src');
+        if (dataSrc && iframe.src !== dataSrc) {
+          iframe.src = dataSrc;
+        }
+      });
+
+      // --- AUTOSCROLL CON OFFSET ---
+      // Pequeño timeout para permitir que el resto de los desplegables se cierren y se reajuste la altura
+      setTimeout(() => {
+        details.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
         });
+      }, 50);
+
+    } else {
+      const iframes = details.querySelectorAll('iframe.iframe-container');
+      iframes.forEach(iframe => {
+        iframe.src = 'about:blank';
+      });
+    }
+  });
+});
 
         window.addEventListener('DOMContentLoaded', () => {
             allDetails.forEach(details => details.removeAttribute('open'));
