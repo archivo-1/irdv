@@ -297,12 +297,14 @@
             background: rgba(255, 255, 255, 0.02);
         }
 
-        /* --- Charlas Magistrales Grid --- */
+        /* --- Charlas --- */
         .speakers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+        justify-content: center;
+        justify-items: center;
         }
 
         .speaker-card {
@@ -500,6 +502,15 @@
                 gap: 1rem;
             }
         }
+        .press-table a,
+.press-table a:visited {
+    color: #aaa;
+    text-decoration: underline;
+}
+
+.press-table a:hover {
+    color: var(--accent-color);
+}
     </style>
 </head>
 <body>
@@ -551,7 +562,7 @@
                     </div>
                     <div class="lang-block" data-lang="en" style="display: none;">
                         <p>Photographic, audiovisual registry, and press clippings from national and international media.</p>
-                        <iframe class="iframe-container" data-src="about:blank" src="about:blank" title="Venice Gallery EN"></iframe>
+                        <iframe class="iframe-container" data-src="/galeria_a.html" src="about:blank" title="Venice Gallery EN"></iframe>
                     </div>
                 </div>
             </details>
@@ -584,55 +595,103 @@
                 </div>
             </details>
 
-            <!-- PRENSA -->
-            <details>
-                <summary id="ir-sum-press">PRENSA</summary>
-                <div class="dropdown-content">
-                    <div class="press-table-container">
-                        <table class="press-table">
-                            <thead>
-                                <tr>
-                                    <th class="th-date">Fecha</th>
-                                    <th class="th-source">Fuente</th>
-                                    <th class="th-link">Enlace</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- 29 filas -->
-                                 <tr><td>10 feb 2025</td><td>Ministerio de las Culturas</td><td><a href="https://www.cultura.gob.cl/destacado/ministerio-de-las-culturas-anuncia-resultado-del-concurso-de-ideas-para-el-pabellon-de-chile-en-la-19-bienal-de-arquitectura-de-venecia/">cultura.gob.cl</a></td></tr>
-                                <tr><td>13 feb 2025</td><td>GSAPP Columbia University</td><td><a href="https://www.arch.columbia.edu/news/gsapp-19th-venice-biennale ">arch.columbia.edu</a></td></tr>
-                                <tr><td>17 feb 2025</td><td>ArchDaily (Español)</td><td><a href="https://www.archdaily.cl/cl/1026854/reflective-intelligences-el-pabellon-de-chile-en-la-bienal-de-venecia-explora-su-rol-como-un-centro-digital-en-la-arquitectura-en-relacion-con-la-escena-de-la-ia">archdaily.cl</a></td></tr>
-                                <tr><td>17 feb 2025</td><td>Núcleo FAIR</td><td><a href="https://www.nucleofair.org/noticias/investigadores-fair-fueron-seleccionados-para-la-bienal-de-arquitectura-de-venecia-2025/">nucleofair.org</a></td></tr>
-                                <tr><td>18 feb 2025</td><td>ArchDaily (Inglés)</td><td><a href="https://www.archdaily.com/1026847/reflective-intelligences-chiles-pavilion-at-the-venice-biennale-explores-its-role-as-a-digital-hub-in-architecture-in-relation-to-the-ai-scene">archdaily.com</a></td></tr>
-                                <tr><td>3 mar 2025</td><td>FAAD UDP</td><td><a href="https://faad.udp.cl/equipo-de-la-faad-udp-representara-a-chile-en-la-19a-bienal-de-arquitectura-de-venecia-2025/">faad.udp.cl</a></td></tr>
-                                <tr><td>12 mar 2025</td><td>Radio Duna</td><td><a href="https://www.duna.cl/programa/santiago-adicto/2025/03/12/nicolas-diaz-serena-dambrosio-y-pedro-silva-hablaron-sobre-la-bienal-de-arquitectura-de-venecia-2025/">duna.cl</a></td></tr>
-                                <tr><td>14 mar 2025</td><td>Uniandes</td><td><a href="https://arqdis.uniandes.edu.co/notas/nuestro-egresado-de-arquitectura-nicolas-diaz-participara-en-la-bienal-de-arquitectura-de-venecia/">arqdis.uniandes.edu.co</a></td></tr>
-                                <tr><td>25 mar 2025</td><td>Goldsmiths</td><td><a href="https://www.gold.ac.uk/news/2025/chile-pavilion-/">gold.ac.uk</a></td></tr>
-                                <tr><td>30 mar 2025</td><td>-El Mostrador</td><td><a href="https://www.elmostrador.cl/cultura/2025/03/30/inteligencias-reflexivas-la-propuesta-de-chile-para-la-bienal-de-arquitectura-de-venecia-2023/">elmostrador.cl</a></td></tr>
-                                <tr><td>7 may 2025</td><td>VeneziaNews</td><td><a href="https://venezianews.it/thebag2025/cile-biennale-architettura-2025/">venezianews.it</a></td></tr>
-                                <tr><td>8 may 2025</td><td>Domusweb</td><td><a href="https://www.domusweb.it/en/architecture/gallery/2025/05/08/biennale-venice-2025-best-pavilions-gardens-arsenal.html">domusweb.it</a></td></tr>
-                                <tr><td>9 may 2025</td><td>Cultura.gob.cl</td><td><a href="https://www.cultura.gob.cl/actualidad/chile-inaugura-el-pabellon-inteligencias-reflexivas-en-la-19a-bienal-de-arquitectura-de-venecia/">cultura.gob.cl</a></td></tr>
-                                <tr><td>9 may 2025</td><td>El Mostrador</td><td><a href="https://www.elmostrador.cl/cultura/2025/05/09/chile-inaugura-el-pabellon-inteligencias-reflexivas-en-la-19a-bienal-de-arquitectura-de-venecia/">elmostrador.cl</a></td></tr>
-                                <tr><td>9 may 2025</td><td>El País</td><td><a href="https://elpais.com/chile/2025-05-09/quien-esta-sentado-en-la-mesa-de-la-ia-arquitectura-politica-y-justicia-territorial.html">elpais.com</a></td></tr>
-                                <tr><td>9 may 2025</td><td>Designboom</td><td><a href="https://www.designboom.com/architecture/designbooms-ultimate-guide-venice-architecture-biennale-2025/">designboom.com</a></td></tr>
-                                <tr><td>10 may 2025</td><td>Le Monde</td><td><a href="https://www.lemonde.fr/culture/article/2025/05/10/a-la-biennale-d-architecture-de-venise-le-grand-spectacle-face-au-desastre_6604789_3246.html">lemonde.fr</a></td></tr>
-                                <tr><td>10 may 2025</td><td>EMOL</td><td><a href="https://www.emol.com/noticias/Espectaculos/2025/05/10/1165972/chile-inaugura-pabellon-bienal-venecia.html">emol.com</a></td></tr>
-                                <tr><td>11 may 2025</td><td>Diario El Heraldo</td><td><a href="https://www.diarioelheraldo.cl/noticia/-chile-inaugura-oficialmente-su-pabellon-en-la-19na-bienal-de-venecia-propuesta-critica-impactos-de-la-inteligencia-artificial">diarioelheraldo.cl</a></td></tr>
-                                <tr><td>12 may 2025</td><td>L'Officiel Chile</td><td><a href="https://www.lofficielchile.com/arte-y-cultura/mesa-comun-chile-en-la-bienal-de-arquitectura-2025">lofficielchile.com</a></td></tr>
-                                <tr><td>14 may 2025</td><td>Interni Magazine</td><td><a href="https://www.internimagazine.com/biennale-2025-en/lintelligenza-naturale-artificiale-collettiva-ai-padiglioni-nazionali-della-19a-biennale/">internimagazine.com</a></td></tr>
-                                <tr><td>19 may 2025</td><td>AOA.cl</td><td><a href="https://www.aoa.cl/una-ciudad-que-vibra-y-acoge/">aoa.cl</a></td></tr>
-                                <tr><td>23 may 2025</td><td>ArchDaily</td><td><a href="https://www.archdaily.com/1030213/latin-america-at-the-2025-venice-biennale-exploring-territory-memory-and-ancestral-knowledge-to-build-the-present?utm_medium=email&utm_source=AD+EN&kth=742%2C404&mc_cid=20f691a955&mc_eid=5a4bede1be">archdaily.com</a></td></tr>
-                                <tr><td>26 may 2025</td><td>Revista Materia</td><td><a href="https://www.revistamateria.com/noticia/inteligencias-reflexivas-cuando-la-ia-se-piensa-desde-el-sur/">revistamateria.com</a></td></tr>
-                                <tr><td>29 may 2025</td><td>Palabra Pública</td><td><a href="https://palabrapublica.uchile.cl/chile-en-venecia-el-impacto-oculto-de-la-ia/?fbclid=PAQ0xDSwKlgw1leHRuA2FlbQIxMQABp-J0SIzH3B_FkNnDREypP6btnGSB1n5fTGNvISNqWdc90puStq2dd3Aj0jGu_aem_2uJM8J97ijv9YMTctFr2EQ">palabrapublica.uchile.cl</a></td></tr>
-                                <tr><td>22 jun 2025</td><td>El Mercurio</td><td>Versión impresa</td></tr>
-                                <tr><td>12 sep 2025</td><td>LaBot</td><td><a href="https://www.labot.cl/alfombra-roja-para-data-centers-sin-evaluacion-ambiental-pero-con-mapa-para-invertir/">Texto del enlace</td></tr>
-                                <tr><td>24 oct 2025</td><td>Fundación Arquía</td><td><a href="https://blogfundacion.arquia.es/2025/10/podcast-datos-con-serena-dambrosio-nicolas-diaz-y-linda-schilling/">blogfundacion.arquia.es</a></td></tr>
-                                <tr><td>27 dic 2025</td><td>El País</td><td><a href="https://elpais-com.cdn.ampproject.org/c/s/elpais.com/america-futura/2025-12-27/el-arte-chileno-que-revela-la-infraestructura-oculta-de-la-inteligencia-artificial.html?outputType=amp">elpais-com.cdn.ampproject.org</a></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </details>
+           <!-- PRENSA -->
+<details>
+    <summary id="ir-sum-press">PRENSA</summary>
+    <div class="dropdown-content">
+        <!-- VERSIÓN EN ESPAÑOL -->
+        <div class="lang-block" data-lang="es">
+            <div class="press-table-container">
+                <table class="press-table">
+                    <thead>
+                        <tr>
+                            <th class="th-date">Fecha</th>
+                            <th class="th-source">Fuente</th>
+                            <th class="th-link">Enlace</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>10 feb 2025</td><td>Ministerio de las Culturas</td><td><a href="https://www.cultura.gob.cl/destacado/ministerio-de-las-culturas-anuncia-resultado-del-concurso-de-ideas-para-el-pabellon-de-chile-en-la-19-bienal-de-arquitectura-de-venecia/">cultura.gob.cl</a></td></tr>
+                        <tr><td>13 feb 2025</td><td>GSAPP Columbia University</td><td><a href="https://www.arch.columbia.edu/news/gsapp-19th-venice-biennale">arch.columbia.edu</a></td></tr>
+                        <tr><td>17 feb 2025</td><td>ArchDaily (Español)</td><td><a href="https://www.archdaily.cl/cl/1026854/reflective-intelligences-el-pabellon-de-chile-en-la-bienal-de-venecia-explora-su-rol-como-un-centro-digital-en-la-arquitectura-en-relacion-con-la-escena-de-la-ia">archdaily.cl</a></td></tr>
+                        <tr><td>17 feb 2025</td><td>Núcleo FAIR</td><td><a href="https://www.nucleofair.org/noticias/investigadores-fair-fueron-seleccionados-para-la-bienal-de-arquitectura-de-venecia-2025/">nucleofair.org</a></td></tr>
+                        <tr><td>18 feb 2025</td><td>ArchDaily (Inglés)</td><td><a href="https://www.archdaily.com/1026847/reflective-intelligences-chiles-pavilion-at-the-venice-biennale-explores-its-role-as-a-digital-hub-in-architecture-in-relation-to-the-ai-scene">archdaily.com</a></td></tr>
+                        <tr><td>3 mar 2025</td><td>FAAD UDP</td><td><a href="https://faad.udp.cl/equipo-de-la-faad-udp-representara-a-chile-en-la-19a-bienal-de-arquitectura-de-venecia-2025/">faad.udp.cl</a></td></tr>
+                        <tr><td>12 mar 2025</td><td>Radio Duna</td><td><a href="https://www.duna.cl/programa/santiago-adicto/2025/03/12/nicolas-diaz-serena-dambrosio-y-pedro-silva-hablaron-sobre-la-bienal-de-arquitectura-de-venecia-2025/">duna.cl</a></td></tr>
+                        <tr><td>14 mar 2025</td><td>Uniandes</td><td><a href="https://arqdis.uniandes.edu.co/notas/nuestro-egresado-de-arquitectura-nicolas-diaz-participara-en-la-bienal-de-arquitectura-de-venecia/">arqdis.uniandes.edu.co</a></td></tr>
+                        <tr><td>25 mar 2025</td><td>Goldsmiths</td><td><a href="https://www.gold.ac.uk/news/2025/chile-pavilion-/">gold.ac.uk</a></td></tr>
+                        <tr><td>30 mar 2025</td><td>El Mostrador</td><td><a href="https://www.elmostrador.cl/cultura/2025/03/30/inteligencias-reflexivas-la-propuesta-de-chile-para-la-bienal-de-arquitectura-de-venecia-2023/">elmostrador.cl</a></td></tr>
+                        <tr><td>7 may 2025</td><td>VeneziaNews</td><td><a href="https://venezianews.it/thebag2025/cile-biennale-architettura-2025/">venezianews.it</a></td></tr>
+                        <tr><td>8 may 2025</td><td>Domusweb</td><td><a href="https://www.domusweb.it/en/architecture/gallery/2025/05/08/biennale-venice-2025-best-pavilions-gardens-arsenal.html">domusweb.it</a></td></tr>
+                        <tr><td>9 may 2025</td><td>Cultura.gob.cl</td><td><a href="https://www.cultura.gob.cl/actualidad/chile-inaugura-el-pabellon-inteligencias-reflexivas-en-la-19a-bienal-de-arquitectura-de-venecia/">cultura.gob.cl</a></td></tr>
+                        <tr><td>9 may 2025</td><td>El Mostrador</td><td><a href="https://www.elmostrador.cl/cultura/2025/05/09/chile-inaugura-el-pabellon-inteligencias-reflexivas-en-la-19a-bienal-de-arquitectura-de-venecia/">elmostrador.cl</a></td></tr>
+                        <tr><td>9 may 2025</td><td>El País</td><td><a href="https://elpais.com/chile/2025-05-09/quien-esta-sentado-en-la-mesa-de-la-ia-arquitectura-politica-y-justicia-territorial.html">elpais.com</a></td></tr>
+                        <tr><td>9 may 2025</td><td>Designboom</td><td><a href="https://www.designboom.com/architecture/designbooms-ultimate-guide-venice-architecture-biennale-2025/">designboom.com</a></td></tr>
+                        <tr><td>10 may 2025</td><td>Le Monde</td><td><a href="https://www.lemonde.fr/culture/article/2025/05/10/a-la-biennale-d-architecture-de-venise-le-grand-spectacle-face-au-desastre_6604789_3246.html">lemonde.fr</a></td></tr>
+                        <tr><td>10 may 2025</td><td>EMOL</td><td><a href="https://www.emol.com/noticias/Espectaculos/2025/05/10/1165972/chile-inaugura-pabellon-bienal-venecia.html">emol.com</a></td></tr>
+                        <tr><td>11 may 2025</td><td>Diario El Heraldo</td><td><a href="https://www.diarioelheraldo.cl/noticia/-chile-inaugura-oficialmente-su-pabellon-en-la-19na-bienal-de-venecia-propuesta-critica-impactos-de-la-inteligencia-artificial">diarioelheraldo.cl</a></td></tr>
+                        <tr><td>12 may 2025</td><td>L'Officiel Chile</td><td><a href="https://www.lofficielchile.com/arte-y-cultura/mesa-comun-chile-en-la-bienal-de-arquitectura-2025">lofficielchile.com</a></td></tr>
+                        <tr><td>14 may 2025</td><td>Interni Magazine</td><td><a href="https://www.internimagazine.com/biennale-2025-en/lintelligenza-naturale-artificiale-collettiva-ai-padiglioni-nazionali-della-19a-biennale/">internimagazine.com</a></td></tr>
+                        <tr><td>19 may 2025</td><td>AOA.cl</td><td><a href="https://www.aoa.cl/una-ciudad-que-vibra-y-acoge/">aoa.cl</a></td></tr>
+                        <tr><td>23 may 2025</td><td>ArchDaily</td><td><a href="https://www.archdaily.com/1030213/latin-america-at-the-2025-venice-biennale-exploring-territory-memory-and-ancestral-knowledge-to-build-the-present">archdaily.com</a></td></tr>
+                        <tr><td>26 may 2025</td><td>Revista Materia</td><td><a href="https://www.revistamateria.com/noticia/inteligencias-reflexivas-cuando-la-ia-se-piensa-desde-el-sur/">revistamateria.com</a></td></tr>
+                        <tr><td>29 may 2025</td><td>Palabra Pública</td><td><a href="https://palabrapublica.uchile.cl/chile-en-venecia-el-impacto-oculto-de-la-ia/">palabrapublica.uchile.cl</a></td></tr>
+                        <tr><td>22 jun 2025</td><td>El Mercurio</td><td>Versión impresa</td></tr>
+                        <tr><td>12 sep 2025</td><td>LaBot</td><td><a href="https://www.labot.cl/alfombra-roja-para-data-centers-sin-evaluacion-ambiental-pero-con-mapa-para-invertir/">labot.cl</a></td></tr>
+                        <tr><td>24 oct 2025</td><td>Fundación Arquía</td><td><a href="https://blogfundacion.arquia.es/2025/10/podcast-datos-con-serena-dambrosio-nicolas-diaz-y-linda-schilling/">blogfundacion.arquia.es</a></td></tr>
+                        <tr><td>27 dic 2025</td><td>El País</td><td><a href="https://elpais.com/america-futura/2025-12-27/el-arte-chileno-que-revela-la-infraestructura-oculta-de-la-inteligencia-artificial.html">elpais.com</a></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- VERSIÓN EN INGLÉS -->
+        <div class="lang-block" data-lang="en" style="display: none;">
+            <div class="press-table-container">
+                <table class="press-table">
+                    <thead>
+                        <tr>
+                            <th class="th-date">Date</th>
+                            <th class="th-source">Source</th>
+                            <th class="th-link">Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Feb 10, 2025</td><td>Ministry of Culture</td><td><a href="https://www.cultura.gob.cl/destacado/ministerio-de-las-culturas-anuncia-resultado-del-concurso-de-ideas-para-el-pabellon-de-chile-en-la-19-bienal-de-arquitectura-de-venecia/">cultura.gob.cl</a></td></tr>
+                        <tr><td>Feb 13, 2025</td><td>GSAPP Columbia University</td><td><a href="https://www.arch.columbia.edu/news/gsapp-19th-venice-biennale">arch.columbia.edu</a></td></tr>
+                        <tr><td>Feb 17, 2025</td><td>ArchDaily (Spanish)</td><td><a href="https://www.archdaily.cl/cl/1026854/reflective-intelligences-el-pabellon-de-chile-en-la-bienal-de-venecia-explora-su-rol-como-un-centro-digital-en-la-arquitectura-en-relacion-con-la-escena-de-la-ia">archdaily.cl</a></td></tr>
+                        <tr><td>Feb 17, 2025</td><td>Núcleo FAIR</td><td><a href="https://www.nucleofair.org/noticias/investigadores-fair-fueron-seleccionados-para-la-bienal-de-arquitectura-de-venecia-2025/">nucleofair.org</a></td></tr>
+                        <tr><td>Feb 18, 2025</td><td>ArchDaily (English)</td><td><a href="https://www.archdaily.com/1026847/reflective-intelligences-chiles-pavilion-at-the-venice-biennale-explores-its-role-as-a-digital-hub-in-architecture-in-relation-to-the-ai-scene">archdaily.com</a></td></tr>
+                        <tr><td>Mar 3, 2025</td><td>FAAD UDP</td><td><a href="https://faad.udp.cl/equipo-de-la-faad-udp-representara-a-chile-en-la-19a-bienal-de-arquitectura-de-venecia-2025/">faad.udp.cl</a></td></tr>
+                        <tr><td>Mar 12, 2025</td><td>Radio Duna</td><td><a href="https://www.duna.cl/programa/santiago-adicto/2025/03/12/nicolas-diaz-serena-dambrosio-y-pedro-silva-hablaron-sobre-la-bienal-de-arquitectura-de-venecia-2025/">duna.cl</a></td></tr>
+                        <tr><td>Mar 14, 2025</td><td>Uniandes</td><td><a href="https://arqdis.uniandes.edu.co/notas/nuestro-egresado-de-arquitectura-nicolas-diaz-participara-en-la-bienal-de-arquitectura-de-venecia/">arqdis.uniandes.edu.co</a></td></tr>
+                        <tr><td>Mar 25, 2025</td><td>Goldsmiths</td><td><a href="https://www.gold.ac.uk/news/2025/chile-pavilion-/">gold.ac.uk</a></td></tr>
+                        <tr><td>Mar 30, 2025</td><td>El Mostrador</td><td><a href="https://www.elmostrador.cl/cultura/2025/03/30/inteligencias-reflexivas-la-propuesta-de-chile-para-la-bienal-de-arquitectura-de-venecia-2023/">elmostrador.cl</a></td></tr>
+                        <tr><td>May 7, 2025</td><td>VeneziaNews</td><td><a href="https://venezianews.it/thebag2025/cile-biennale-architettura-2025/">venezianews.it</a></td></tr>
+                        <tr><td>May 8, 2025</td><td>Domusweb</td><td><a href="https://www.domusweb.it/en/architecture/gallery/2025/05/08/biennale-venice-2025-best-pavilions-gardens-arsenal.html">domusweb.it</a></td></tr>
+                        <tr><td>May 9, 2025</td><td>Cultura.gob.cl</td><td><a href="https://www.cultura.gob.cl/actualidad/chile-inaugura-el-pabellon-inteligencias-reflexivas-en-la-19a-bienal-de-arquitectura-de-venecia/">cultura.gob.cl</a></td></tr>
+                        <tr><td>May 9, 2025</td><td>El Mostrador</td><td><a href="https://www.elmostrador.cl/cultura/2025/05/09/chile-inaugura-el-pabellon-inteligencias-reflexivas-en-la-19a-bienal-de-arquitectura-de-venecia/">elmostrador.cl</a></td></tr>
+                        <tr><td>May 9, 2025</td><td>El País</td><td><a href="https://elpais.com/chile/2025-05-09/quien-esta-sentado-en-la-mesa-de-la-ia-arquitectura-politica-y-justicia-territorial.html">elpais.com</a></td></tr>
+                        <tr><td>May 9, 2025</td><td>Designboom</td><td><a href="https://www.designboom.com/architecture/designbooms-ultimate-guide-venice-architecture-biennale-2025/">designboom.com</a></td></tr>
+                        <tr><td>May 10, 2025</td><td>Le Monde</td><td><a href="https://www.lemonde.fr/culture/article/2025/05/10/a-la-biennale-d-architecture-de-venise-le-grand-spectacle-face-au-desastre_6604789_3246.html">lemonde.fr</a></td></tr>
+                        <tr><td>May 10, 2025</td><td>EMOL</td><td><a href="https://www.emol.com/noticias/Espectaculos/2025/05/10/1165972/chile-inaugura-pabellon-bienal-venecia.html">emol.com</a></td></tr>
+                        <tr><td>May 11, 2025</td><td>Diario El Heraldo</td><td><a href="https://www.diarioelheraldo.cl/noticia/-chile-inaugura-oficialmente-su-pabellon-en-la-19na-bienal-de-venecia-propuesta-critica-impactos-de-la-inteligencia-artificial">diarioelheraldo.cl</a></td></tr>
+                        <tr><td>May 12, 2025</td><td>L'Officiel Chile</td><td><a href="https://www.lofficielchile.com/arte-y-cultura/mesa-comun-chile-en-la-bienal-de-arquitectura-2025">lofficielchile.com</a></td></tr>
+                        <tr><td>May 14, 2025</td><td>Interni Magazine</td><td><a href="https://www.internimagazine.com/biennale-2025-en/lintelligenza-naturale-artificiale-collettiva-ai-padiglioni-nazionali-della-19a-biennale/">internimagazine.com</a></td></tr>
+                        <tr><td>May 19, 2025</td><td>AOA.cl</td><td><a href="https://www.aoa.cl/una-ciudad-que-vibra-y-acoge/">aoa.cl</a></td></tr>
+                        <tr><td>May 23, 2025</td><td>ArchDaily</td><td><a href="https://www.archdaily.com/1030213/latin-america-at-the-2025-venice-biennale-exploring-territory-memory-and-ancestral-knowledge-to-build-the-present">archdaily.com</a></td></tr>
+                        <tr><td>May 26, 2025</td><td>Revista Materia</td><td><a href="https://www.revistamateria.com/noticia/inteligencias-reflexivas-cuando-la-ia-se-piensa-desde-el-sur/">revistamateria.com</a></td></tr>
+                        <tr><td>May 29, 2025</td><td>Palabra Pública</td><td><a href="https://palabrapublica.uchile.cl/chile-en-venecia-el-impacto-oculto-de-la-ia/">palabrapublica.uchile.cl</a></td></tr>
+                        <tr><td>Jun 22, 2025</td><td>El Mercurio</td><td>Print edition</td></tr>
+                        <tr><td>Sep 12, 2025</td><td>LaBot</td><td><a href="https://www.labot.cl/alfombra-roja-para-data-centers-sin-evaluacion-ambiental-pero-con-mapa-para-invertir/">labot.cl</a></td></tr>
+                        <tr><td>Oct 24, 2025</td><td>Fundación Arquía</td><td><a href="https://blogfundacion.arquia.es/2025/10/podcast-datos-con-serena-dambrosio-nicolas-diaz-y-linda-schilling/">blogfundacion.arquia.es</a></td></tr>
+                        <tr><td>Dec 27, 2025</td><td>El País</td><td><a href="https://elpais.com/america-futura/2025-12-27/el-arte-chileno-que-revela-la-infraestructura-oculta-de-la-inteligencia-artificial.html">elpais.com</a></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</details>
 
             <!-- EQUIPO -->
             <details>
@@ -649,6 +708,7 @@
                         <p><strong>Producción arquitectónica en Venecia</strong><br>Alessandra Dal Mos</p>
                         <p><strong>Colaboradores</strong><br>Cristóbal Mallea Fuenzalida, Luna Figueroa Maraboli, Vicente Sierra Drolett, Daniel Aguayo Mozó, Laura Reyes, Nathan Humanante Schatz</p>
                         <p><strong>Prensa</strong><br>Constanza Almarza</p>
+                        <p><strong>Diseño web</strong><br>Nathan Humanante Schatz</p>
                         <p><strong>Impresión 3D: LAT</strong><br>Laboratorio Arte y Tecnología, Escuela de Arte, Facultad de Artes UC Chile; Laboratorio de Fabricación Digital Fabhaus, Facultad de Arquitectura, Diseño y Estudios Urbanos UC Chile; Escuela de Arquitectura, Universidad Andrés Bello; Facultad de Arquitectura e Ingeniería, Universidad Central; Facultad de Arquitectura, Arte y Diseño, Universidad Diego Portales; Escuela de Arquitectura, Universidad de Las Américas</p>
                     </div>
                     <div class="lang-block" data-lang="en" style="display: none;">
@@ -662,6 +722,7 @@
                         <p><strong>Architectural production in Venice:</strong><br>Alessandra Dal Mos</p>
                         <p><strong>Collaborators:</strong><br>Cristóbal Mallea Fuenzalida, Luna Figueroa Maraboli, Vicente Sierra Drolett, Daniel Aguayo Mozó, Laura Reyes, Nathan Humanante Schatz</p>
                         <p><strong>Press:</strong><br>Constanza Almarza</p>
+                        <p><strong>Web design</strong><br>Nathan Humanante Schatz</p>
                         <p><strong>3D Printing: LAT</strong><br>Laboratorio Arte y Tecnología, Escuela de Arte, Facultad de Artes UC Chile; Laboratorio de Fabricación Digital Fabhaus, Facultad de Arquitectura, Diseño y Estudios Urbanos UC Chile; Escuela de Arquitectura, Universidad Andrés Bello; Facultad de Arquitectura e Ingeniería, Universidad Central; Facultad de Arquitectura, Arte y Diseño, Universidad Diego Portales; Escuela de Arquitectura, Universidad de Las Américas</p>
                     </div>
                 </div>
@@ -719,7 +780,7 @@
                 <div class="dropdown-content">
                     <div class="speakers-grid">
                         <div class="speaker-card">
-                            <img src="assets/speakers/marina-otero.jpg" alt="Marina Otero Verzier" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <img src="assets/speakers/marina-otero.jpeg" alt="Marina Otero Verzier" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
                             <div class="speaker-name">Marina Otero Verzier</div>
                             <div class="speaker-bio">
                                 <span class="lang-block" data-lang="es">Arquitecta e investigadora, y docente de Arquitectura en la Graduate School of Design de la Universidad de Harvard (Harvard GSD)</span>
@@ -727,7 +788,7 @@
                             </div>
                         </div>
                         <div class="speaker-card">
-                            <img src="assets/speakers/susan-schuppli.jpg" alt="Susan Schuppli" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <img src="assets/speakers/susan-schuppli.jpeg" alt="Susan Schuppli" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
                             <div class="speaker-name">Susan Schuppli</div>
                             <div class="speaker-bio">
                                 <span class="lang-block" data-lang="es">Artista e investigadora, Directora del Centre for Research Architecture de Goldsmiths y Presidenta del Consejo de Forensic Architecture</span>
@@ -735,7 +796,7 @@
                             </div>
                         </div>
                         <div class="speaker-card">
-                            <img src="assets/speakers/felicity-scott.jpg" alt="Felicity Scott" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <img src="assets/speakers/felicity-scott.jpeg" alt="Felicity Scott" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
                             <div class="speaker-name">Felicity Scott</div>
                             <div class="speaker-bio">
                                 <span class="lang-block" data-lang="es">Arquitecta, historiadora y Profesora Titular de Arquitectura en Columbia GSAPP, donde dirige el programa de Doctorado en Arquitectura (Historia y Teoría) y codirige el programa en Critical, Curatorial and Conceptual Practices in Architecture (CCCP)</span>
@@ -743,7 +804,7 @@
                             </div>
                         </div>
                         <div class="speaker-card">
-                            <img src="assets/speakers/cecile-diguet.jpg" alt="Cécile Diguet" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <img src="assets/speakers/cecile-diguet.jpeg" alt="Cécile Diguet" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
                             <div class="speaker-name">Cécile Diguet</div>
                             <div class="speaker-bio">
                                 <span class="lang-block" data-lang="es">Urbanista e investigadora en la Universidad de Ginebra. Especializada en la huella ambiental y la infraestructura territorial del ámbito digital</span>
@@ -751,7 +812,7 @@
                             </div>
                         </div>
                         <div class="speaker-card">
-                            <img src="assets/speakers/mario-santamaria.jpg" alt="Mario Santamaría" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <img src="assets/speakers/mario-santamaria.jpeg" alt="Mario Santamaría" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
                             <div class="speaker-name">Mario Santamaría</div>
                             <div class="speaker-bio">
                                 <span class="lang-block" data-lang="es">Artista e investigador cuyo trabajo examina la infraestructura material de internet, las redes de datos y los sistemas de información.</span>
@@ -759,7 +820,7 @@
                             </div>
                         </div>
                         <div class="speaker-card">
-                            <img src="assets/speakers/cheng-luen-hsueh.jpg" alt="Cheng-Luen Hsueh" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <img src="assets/speakers/cheng-luen-hsueh.jpeg" alt="Cheng-Luen Hsueh" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
                             <div class="speaker-name">Cheng-Luen Hsueh</div>
                             <div class="speaker-bio">
                                 <span class="lang-block" data-lang="es">Arquitecto, urbanista y Profesor Asociado en la National Cheng Kung University (NCKU) de Taiwán.</span>
@@ -767,7 +828,7 @@
                             </div>
                         </div>
                         <div class="speaker-card">
-                            <img src="assets/speakers/david-capener.jpg" alt="David Capener" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <img src="assets/speakers/david-capener.jpeg" alt="David Capener" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
                             <div class="speaker-name">David Capener</div>
                             <div class="speaker-bio">
                                 <span class="lang-block" data-lang="es">Arquitecto, artista y profesor de Arquitectura en la Universidad de Ulster.</span>
@@ -775,7 +836,7 @@
                             </div>
                         </div>
                         <div class="speaker-card">
-                            <img src="assets/speakers/laura-kurgan.jpg" alt="Laura Kurgan" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <img src="assets/speakers/laura-kurgan.jpeg" alt="Laura Kurgan" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
                             <div class="speaker-name">Laura Kurgan</div>
                             <div class="speaker-bio">
                                 <span class="lang-block" data-lang="es">Profesora Titular de Arquitectura en Columbia GSAPP y Directora del Center for Spatial Research (CSR).</span>
@@ -809,7 +870,7 @@
             <details>
                 <summary id="dv-sum-session1">SESIÓN 1</summary>
                 <div class="dropdown-content">
-                    <iframe class="iframe-container" data-src="about:blank" src="about:blank" title="Sesión 1 Gallery"></iframe>
+                    <iframe class="iframe-container" data-src="/galeria_s1.html" src="about:blank" title="Sesión 1 Gallery"></iframe>
                 </div>
             </details>
 
@@ -817,7 +878,7 @@
             <details>
                 <summary id="dv-sum-session2">SESIÓN 2</summary>
                 <div class="dropdown-content">
-                    <iframe class="iframe-container" data-src="about:blank" src="about:blank" title="Sesión 2 Gallery"></iframe>
+                    <iframe class="iframe-container" data-src="/galeria_s2.html" src="about:blank" title="Sesión 2 Gallery"></iframe>
                 </div>
             </details>
 
@@ -825,7 +886,7 @@
             <details>
                 <summary id="dv-sum-session3">SESIÓN 3</summary>
                 <div class="dropdown-content">
-                    <iframe class="iframe-container" data-src="about:blank" src="about:blank" title="Sesión 3 Gallery"></iframe>
+                    <iframe class="iframe-container" data-src="/galeria_s3.html" src="about:blank" title="Sesión 3 Gallery"></iframe>
                 </div>
             </details>
 
@@ -838,6 +899,7 @@
                         <p><strong>Asistentes</strong><br>Álvaro Andueza, Fabiana Calderón, Tomás Carbonell, Nathan Humanante, Luna Valdivia</p>
                         <p><strong>Identidad Visual Original (Inteligencias Reflexivas)</strong><br>Gaggero Works</p>
                         <p><strong>Adaptación Identidad Visual Digital Vertigo:</strong><br>Antonieta López</p>
+                        <p><strong>Diseño web:</strong><br>Nathan Humanante</p>
                         <p><strong>Responsable de prensa</strong><br>Constanza Almarza</p>
                     </div>
                     <div class="lang-block" data-lang="en" style="display: none;">
@@ -845,6 +907,7 @@
                         <p><strong>Assistants:</strong><br>Álvaro Andueza, Fabiana Calderón, Tomás Carbonell, Nathan Humanante, Luna Valdivia</p>
                         <p><strong>Original Visual Identity (Inteligencias Reflexivas):</strong><br>Gaggero Works</p>
                         <p><strong>Digital Vertigo Visual Identity Adaptation:</strong><br>Antonieta López</p>
+                        <p><strong>Web Design:</strong><br>Nathan Humanante</p>
                         <p><strong>Press Officer:</strong><br>Constanza Almarza</p>
                     </div>
                 </div>
