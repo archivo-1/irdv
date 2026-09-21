@@ -49,100 +49,136 @@ const filesParam = urlParams.get('files');
 let images = [];
 
 if (filesParam) {
-  // Para cuando quieras especificar una lista corta manual
   images = filesParam.split(',').map(f => `${folder}/${f.trim()}`);
 } else if (total > 0) {
-  // Genera rutas base para cada número (ej: galeria_c/1, galeria_c/2...)
   for (let i = 1; i <= total; i++) {
     images.push(`${folder}/${i}`);
   }
 }
+
+let currentIndex = 0;
+const mediaWrapper = document.getElementById('mediaWrapper');
+const thumbnailList = document.getElementById('thumbnailList');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const imageCounter = document.getElementById('imageCounter');
 
 function isVideo(path) {
   const lower = path.toLowerCase();
   return lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.mov');
 }
 
-// Función auxiliar para cargar imagen o probar video automáticamente
-function createMediaElement(basePath, isThumb = false) {
-  // Si la ruta ya tiene extensión (por usar filesParam)
+// Carga asíncrona limpia para el visor principal y thumbnails
+function renderMedia(basePath, isThumb, container, callback) {
   if (basePath.includes('.')) {
     if (isVideo(basePath)) {
       const vid = document.createElement('video');
       vid.src = basePath;
-      if (isThumb) { vid.muted = true; vid.preload = 'metadata'; }
-      else { vid.controls = true; }
-      return vid;
-    } else {
-      const img = document.createElement('img');
-      img.src = basePath;
-      return img;
-    }
-  }
-
-  // Si no tiene extensión, creamos un elemento dinámico
-  if (isThumb) {
-    const img = document.createElement('img');
-    img.src = `${basePath}.JPG`;
-    // Si la imagen falla en la miniatura, prueba la versión en minúsculas o mp4
-    img.onerror = () => {
-      img.onerror = () => {
-        const vid = document.createElement('video');
-        vid.src = `${basePath}.mp4`;
+      if (isThumb) {
         vid.muted = true;
+        vid.preload = 'metadata';
         vid.className = 'thumb-item';
-        img.replaceWith(vid);
-      };
-      img.src = `${basePath}.jpg`;
-    };
-    return img;
-  } else {
-    // Para el visor principal
-    const img = document.createElement('img');
-    img.src = `${basePath}.JPG`;
-    img.onerror = () => {
-      img.onerror = () => {
-        // Si no fue JPG ni jpg, intenta renderizar como video MP4
-        const vid = document.createElement('video');
-        vid.src = `${basePath}.mp4`;
+      } else {
         vid.controls = true;
         vid.style.maxHeight = '80vh';
         vid.style.maxWidth = '100%';
-        img.replaceWith(vid);
-      };
-      img.src = `${basePath}.jpg`;
-    };
-    return img;
+      }
+      container.appendChild(vid);
+    } else {
+      const img = document.createElement('img');
+      img.src = basePath;
+      if (isThumb) img.className = 'thumb-item';
+      container.appendChild(img);
+    }
+    if (callback) callback();
+    return;
   }
+
+  // Intenta imagen JPG / jpg primero, de lo contrario commuta a video MP4
+  const img = document.createElement('img');
+  img.src = `${basePath}.JPG`;
+  if (isThumb) img.className = 'thumb-item';
+
+  img.onload = () => {
+    container.appendChild(img);
+    if (callback) callback();
+  };
+
+  img.onerror = () => {
+    const imgMin = document.createElement('img');
+    imgMin.src = `${basePath}.jpg`;
+    if (isThumb) imgMin.className = 'thumb-item';
+
+    imgMin.onload = () => {
+      container.appendChild(imgMin);
+      if (callback) callback();
+    };
+
+    imgMin.onerror = () => {
+      // Si no es imagen, es un video MP4
+      const vid = document.createElement('video');
+      vid.src = `${basePath}.mp4`;
+      if (isThumb) {
+        vid.muted = true;
+        vid.preload = 'metadata';
+        vid.className = 'thumb-item';
+      } else {
+        vid.controls = true;
+        vid.autoplay = false;
+        vid.muted = false;
+        vid.style.maxHeight = '80vh';
+        vid.style.maxWidth = '100%';
+      }
+      container.appendChild(vid);
+      if (callback) callback();
+    };
+  };
 }
 
 function updateGallery() {
   const currentPath = images[currentIndex];
   mediaWrapper.innerHTML = '';
 
-  const element = createMediaElement(currentPath, false);
-  mediaWrapper.appendChild(element);
-
-  imageCounter.textContent = `${currentIndex + 1} / ${images.length}`;
-
-  const thumbs = thumbnailList.querySelectorAll('.thumb-item');
-  thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+  renderMedia(currentPath, false, mediaWrapper, () => {
+    imageCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+    const thumbs = thumbnailList.querySelectorAll('.thumb-item');
+    thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+  });
 }
 
 // Generar Miniaturas
 thumbnailList.innerHTML = '';
 images.forEach((path, index) => {
-  const thumb = createMediaElement(path, true);
-  thumb.className = 'thumb-item';
-  thumb.addEventListener('click', () => {
-    currentIndex = index;
-    updateGallery();
+  const wrapper = document.createElement('div');
+  wrapper.style.display = 'contents';
+  
+  renderMedia(path, true, wrapper, () => {
+    const thumbElement = wrapper.firstElementChild;
+    if (thumbElement) {
+      if (index === currentIndex) thumbElement.classList.add('active');
+      thumbElement.addEventListener('click', () => {
+        currentIndex = index;
+        updateGallery();
+      });
+    }
   });
-  thumbnailList.appendChild(thumb);
+  thumbnailList.appendChild(wrapper);
 });
 
-// Carga inicial
-if (images.length > 0) updateGallery();
+prevBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updateGallery();
+});
+
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % images.length;
+  updateGallery();
+});
+
+// Forzar la carga inicial inmediata del primer elemento
+if (images.length > 0) {
+  updateGallery();
+}
   </script>
 </body>
 </html>
