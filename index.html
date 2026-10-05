@@ -18,7 +18,7 @@
     </script>
 
     <style>
-        /* fuente aldea */
+        /* Declaración de fuentes personalizadas */
 @font-face {
   font-family: 'AAIdea';
   src: url('assets/fonts/AAIdea-Regular.woff2') format('woff2');
@@ -328,14 +328,14 @@
         .speakers-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: center; /* Centra todos los elementos, incluidos los huérfanos de la última fila */
     gap: 1.5rem;
     margin-top: 1.5rem;
 }
 
 .speaker-card {
-    width: 180px; 
-    
+    width: 180px; /* Ancho fijo para cada tarjeta */
+    /* o puedes usar: flex: 0 1 180px; */
 }
 
         .speaker-card {
@@ -439,7 +439,7 @@
             filter: brightness(0) invert(1);
         }
 
-        /* --- flap --- */
+        /* --- global flap --- */
         .global-flap {
             position: fixed;
             right: 0;
@@ -816,48 +816,12 @@ Reflective Intelligences uses the table as a curatorial device to explore archit
                 <div class="dropdown-content">
                     <div class="speakers-grid">
                         <div class="speaker-card">
-                            <img src="assets/speakers/marina-otero.jpeg" alt="Marina Otero Verzier" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
-                            <div class="speaker-name">Marina Otero Verzier</div>
-                            <div class="speaker-bio">
-                                <span class="lang-block" data-lang="es">Arquitecta e investigadora, y docente de Arquitectura en la Graduate School of Design de la Universidad de Harvard (Harvard GSD)</span>
-                                <span class="lang-block" data-lang="en" style="display: none;">Architect, researcher, and Lecturer in Architecture at the Harvard University Graduate School of Design (Harvard GSD)</span>
-                            </div>
-                        </div>
-                        <div class="speaker-card">
-                            <img src="assets/speakers/susan-schuppli.jpeg" alt="Susan Schuppli" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
-                            <div class="speaker-name">Susan Schuppli</div>
-                            <div class="speaker-bio">
-                                <span class="lang-block" data-lang="es">Artista e investigadora, Directora del Centre for Research Architecture de Goldsmiths y Presidenta del Consejo de Forensic Architecture</span>
-                                <span class="lang-block" data-lang="en" style="display: none;">Artist and researcher, Director of the Centre for Research Architecture at Goldsmiths, and Chair of the Advisory Board of Forensic Architecture</span>
-                            </div>
-                        </div>
-                        <div class="speaker-card">
-                            <img src="assets/speakers/felicity-scott.jpeg" alt="Felicity Scott" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
-                            <div class="speaker-name">Felicity Scott</div>
-                            <div class="speaker-bio">
-                                <span class="lang-block" data-lang="es">Arquitecta, historiadora y Profesora Titular de Arquitectura en Columbia GSAPP, donde dirige el programa de Doctorado en Arquitectura (Historia y Teoría) y codirige el programa en Critical, Curatorial and Conceptual Practices in Architecture (CCCP)</span>
-                                <span class="lang-block" data-lang="en" style="display: none;">Architect, historian, and Professor of Architecture at Columbia GSAPP, where she directs the Ph.D. program in Architecture (History and Theory) and co-directs the program in Critical, Curatorial and Conceptual Practices in Architecture (CCCP). She is also a founding co-editor of Grey Room.</span>
-                            </div>
-                        </div>
-                        <div class="speaker-card">
-                            <img src="assets/speakers/cecile-diguet.jpeg" alt="Cécile Diguet" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
-                            <div class="speaker-name">Cécile Diguet</div>
-                            <div class="speaker-bio">
-                                <span class="lang-block" data-lang="es">Urbanista e investigadora en la Universidad de Ginebra. Especializada en la huella ambiental y la infraestructura territorial del ámbito digital</span>
-                                <span class="lang-block" data-lang="en" style="display: none;">Urban planner and researcher at the University of Geneva. Specialized in the environmental footprint and territorial infrastructure of the digital realm</span>
-                            </div>
-                        </div>
-                        <div class="speaker-card">
-                            <img src="assets/speakers/mario-santamaria.jpeg" alt="Mario Santamaría" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
-                            <div class="speaker-name">Mario Santamaría</div>
-                            <div class="speaker-bio">
-                                <span class="lang-block" data-lang="es">Artista e investigador cuyo trabajo examina la infraestructura material de internet, las redes de datos y los sistemas de información.</span>
-                                <span class="lang-block" data-lang="en" style="display: none;">Artist and researcher whose work examines the material infrastructure of the internet, data networks, and information systems</span>
-                            </div>
-                        </div>
-                        <div class="speaker-card">
                             <img src="assets/speakers/cheng-luen-hsueh.jpeg" alt="Cheng-Luen Hsueh" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
                             <div class="speaker-name">Cheng-Luen Hsueh</div>
+                            <div class="speaker-date">
+                                <span class="lang-block" data-lang="es">06/10 - 17:00 hrs<br>Palacio Pereira</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">10/06 - 17:00 hrs<br>Palacio Pereira</span>
+                            </div>
                             <div class="speaker-bio">
                                 <span class="lang-block" data-lang="es">Arquitecto, urbanista y Profesor Asociado en la National Cheng Kung University (NCKU) de Taiwán.</span>
                                 <span class="lang-block" data-lang="en" style="display: none;">Architect, urban planner, and Associate Professor at National Cheng Kung University (NCKU) in Taiwan.</span>
@@ -866,17 +830,85 @@ Reflective Intelligences uses the table as a curatorial device to explore archit
                         <div class="speaker-card">
                             <img src="assets/speakers/david-capener.jpeg" alt="David Capener" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
                             <div class="speaker-name">David Capener</div>
+                            <div class="speaker-date">
+                                <span class="lang-block" data-lang="es">06/10 - 17:00 hrs<br>Palacio Pereira</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">10/06 - 17:00 hrs<br>Palacio Pereira</span>
+                            </div>
                             <div class="speaker-bio">
                                 <span class="lang-block" data-lang="es">Arquitecto, artista y profesor de Arquitectura en la Universidad de Ulster.</span>
                                 <span class="lang-block" data-lang="en" style="display: none;">Architect, artist, and Lecturer in Architecture at Ulster University.</span>
                             </div>
                         </div>
                         <div class="speaker-card">
+                            <img src="assets/speakers/susan-schuppli.jpeg" alt="Susan Schuppli" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <div class="speaker-name">Susan Schuppli</div>
+                            <div class="speaker-date">
+                                <span class="lang-block" data-lang="es">07/10 - 11:00 hrs<br>FaAAD UDP, Auditorio -2</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">10/07 - 11:00 hrs<br>FaAAD UDP, Auditorio -2</span>
+                            </div>
+                            <div class="speaker-bio">
+                                <span class="lang-block" data-lang="es">Artista e investigadora, Directora del Centre for Research Architecture de Goldsmiths y Presidenta del Consejo de Forensic Architecture</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">Artist and researcher, Director of the Centre for Research Architecture at Goldsmiths, and Chair of the Advisory Board of Forensic Architecture</span>
+                            </div>
+                        </div>
+                        <div class="speaker-card">
                             <img src="assets/speakers/laura-kurgan.jpeg" alt="Laura Kurgan" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
                             <div class="speaker-name">Laura Kurgan</div>
+                            <div class="speaker-date">
+                                <span class="lang-block" data-lang="es">07/10 - 16:00 hrs<br>FaAAD UDP, Auditorio -2</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">10/07 - 16:00 hrs<br>FaAAD UDP, Auditorio -2</span>
+                            </div>
                             <div class="speaker-bio">
                                 <span class="lang-block" data-lang="es">Profesora Titular de Arquitectura en Columbia GSAPP y Directora del Center for Spatial Research (CSR).</span>
                                 <span class="lang-block" data-lang="en" style="display: none;">Professor of Architecture at Columbia GSAPP, and Director of the Center for Spatial Research (CSR).</span>
+                            </div>
+                        </div>
+                        <div class="speaker-card">
+                            <img src="assets/speakers/felicity-scott.jpeg" alt="Felicity Scott" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <div class="speaker-name">Felicity Scott</div>
+                            <div class="speaker-date">
+                                <span class="lang-block" data-lang="es">08/10 - 11:00 hrs<br>Biblioteca Nicanor Parra, UDP</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">10/08 - 11:00 hrs<br>Biblioteca Nicanor Parra, UDP</span>
+                            </div>
+                            <div class="speaker-bio">
+                                <span class="lang-block" data-lang="es">Arquitecta, historiadora y Profesora Titular de Arquitectura en Columbia GSAPP, donde dirige el programa de Doctorado en Arquitectura (Historia y Teoría) y codirige el programa en Critical, Curatorial and Conceptual Practices in Architecture (CCCP)</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">Architect, historian, and Professor of Architecture at Columbia GSAPP, where she directs the Ph.D. program in Architecture (History and Theory) and co-directs the program in Critical, Curatorial and Conceptual Practices in Architecture (CCCP). She is also a founding co-editor of Grey Room.</span>
+                            </div>
+                        </div>
+                        <div class="speaker-card">
+                            <img src="assets/speakers/marina-otero.jpeg" alt="Marina Otero Verzier" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <div class="speaker-name">Marina Otero Verzier</div>
+                            <div class="speaker-date">
+                                <span class="lang-block" data-lang="es">09/10 - 15:00 hrs<br>Biblioteca Nacional, Sala Ercilla</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">10/09 - 15:00 hrs<br>Biblioteca Nacional, Sala Ercilla</span>
+                            </div>
+                            <div class="speaker-bio">
+                                <span class="lang-block" data-lang="es">Arquitecta e investigadora, y docente de Arquitectura en la Graduate School of Design de la Universidad de Harvard (Harvard GSD)</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">Architect, researcher, and Lecturer in Architecture at the Harvard University Graduate School of Design (Harvard GSD)</span>
+                            </div>
+                        </div>
+                        <div class="speaker-card">
+                            <img src="assets/speakers/mario-santamaria.jpeg" alt="Mario Santamaría" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <div class="speaker-name">Mario Santamaría</div>
+                            <div class="speaker-date">
+                                <span class="lang-block" data-lang="es">13/10 - 16:00 hrs<br>FaAAD UDP, Auditorio -2</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">10/13 - 16:00 hrs<br>FaAAD UDP, Auditorio -2</span>
+                            </div>
+                            <div class="speaker-bio">
+                                <span class="lang-block" data-lang="es">Artista e investigador cuyo trabajo examina la infraestructura material de internet, las redes de datos y los sistemas de información.</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">Artist and researcher whose work examines the material infrastructure of the internet, data networks, and information systems</span>
+                            </div>
+                        </div>
+                        <div class="speaker-card">
+                            <img src="assets/speakers/cecile-diguet.jpeg" alt="Cécile Diguet" class="speaker-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'125\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/></svg>'">
+                            <div class="speaker-name">Cécile Diguet</div>
+                            <div class="speaker-date">
+                                <span class="lang-block" data-lang="es">15/10 - 16:00 hrs<br>Biblioteca Nacional, Sala Ercilla</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">10/15 - 16:00 hrs<br>Biblioteca Nacional, Sala Ercilla</span>
+                            </div>
+                            <div class="speaker-bio">
+                                <span class="lang-block" data-lang="es">Urbanista e investigadora en la Universidad de Ginebra. Especializada en la huella ambiental y la infraestructura territorial del ámbito digital</span>
+                                <span class="lang-block" data-lang="en" style="display: none;">Urban planner and researcher at the University of Geneva. Specialized in the environmental footprint and territorial infrastructure of the digital realm</span>
                             </div>
                         </div>
                     </div>
